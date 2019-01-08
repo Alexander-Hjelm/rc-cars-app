@@ -11,7 +11,11 @@ function resetV() {
 }
 
 function handleOrientationEvent(frontToBack, leftToRight, rotateDegrees) {
-  var steer = rotateDegrees / 90.0;
+  
+  var steer = (-rotateDegrees+180) / 90.0;
+  //var steer = rotateDegrees;
+  //Gir -2 til 2. rett opp er -2 og 2. Vi ønsker nærmest 0, som er rett ned. 
+  //
   Tiltspot.msgToGame("move", {h: steer});
 }
 
@@ -30,5 +34,6 @@ window.onload = function() {
         var frontToBack = event.beta;
 
         handleOrientationEvent(frontToBack, leftToRight, rotateDegrees);
+        
     }, true);
 }
