@@ -11,7 +11,8 @@ function resetV() {
 }
 
 function handleOrientationEvent(frontToBack, leftToRight, rotateDegrees) {
-  var steer = rotateDegrees / 90.0;
+  //var steer = rotateDegrees / 90.0;
+  var steer = rotateDegrees;
   Tiltspot.msgToGame("move", {h: steer});
 }
 
@@ -30,5 +31,6 @@ window.onload = function() {
         var frontToBack = event.beta;
 
         handleOrientationEvent(frontToBack, leftToRight, rotateDegrees);
+        
     }, true);
 }

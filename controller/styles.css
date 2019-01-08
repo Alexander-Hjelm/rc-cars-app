@@ -1,0 +1,20 @@
+.container {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    background-color: rgb(29, 41, 73)
+}
+
+#forward:active, #backward:active {
+    background-color: rgb(65, 71, 88)
+}
+
+#forward, #backward {
+    width: 100%;
+    padding: 15%;
+    box-shadow: 3px 3px 3px rgb(2, 17, 27);
+}
+
+body {
+    margin: 0;
+}
