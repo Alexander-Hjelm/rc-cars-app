@@ -1,0 +1,41 @@
+This is a how to guide to use the Tiltspot Game Tester.
+
+*****************
+** INFORMATION **
+*****************
+This is a application made by Phonion Technologies to be used to test games before publishing it to Tiltspot. The application should not be used for other purposes than testing.
+
+To read a more detailed guide visit the documentation page:
+https://tiltspot.tv/getting_started/game_tester
+
+*******************
+** Prerequisites **
+*******************
+
+- Installed Node.js and NPM (https://nodejs.org/)
+
+***********
+** Guide **
+***********
+[ Before starting ]
+Before you start using the Tiltspot Game Tester you should unzip the .zip-file and install all NPM packages which is required. To install the packages you should open a Command Prompt or a Terminal inside the root directory of the game tester and run this command: "npm install".
+
+[ Configurations ]
+In the main folder of the application you will find a file named config.js. This is where you can configure the Tiltspot Game Tester to your preferences. Here is an explanation of the properties:
+
+- Server_IP: This value tells the Tiltspot Game Tester which IP address it should listen to. For only local testing you could use 'localhost' as the value, but if you are to test your game/controller on another device you should change this to you local IP address. Devices that are to connect should be on the same network.
+
+- Server_Port: This value tells the Tiltspot Game Tester which port it should listen to.
+
+- Path_To_Game: This value tells the Tiltspot Game Tester where your game is located. This value is required for the game tester to work. An example could be "C:\\Users\\user\\Documents\\GameName\\Game".
+
+- Path_To_Controller: This value tells the Tiltspot Game Tester where your controller is located. This value is required for the game tester to work. An example could be "C:\\Users\\user\\Documents\\GameName\\Controller".
+
+- Path_To_Assets: This value tells the Tiltspot Game Tester where your assets are located. This value is not required, but should be used if your game uses external assets. An example could be "C:\\Users\\user\\Documents\\GameName\\Assets".
+
+[ Start the Tiltspot Game Tester ]
+To start the game tester open a Command Prompt or a Terminal inside the root of the Tiltspot Game Tester directory. 
+Then run the command: "node app.js". This will start the server for the game tester.
+Then visit the website *Server_IP*:*Server_Port*. For example "localhost:8080".
+
+

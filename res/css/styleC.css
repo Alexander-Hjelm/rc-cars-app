@@ -1,0 +1,316 @@
+@font-face {
+    font-family: LucidaGrande;
+    src: url(../fonts/LucidaGrande.ttf);
+}
+
+html, body, #app, #Layout {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+#Layout{
+    font-family: 'Raleway', sans-serif;
+    top: 0;
+    background: #313160 radial-gradient(circle, #3b3b9b, #2a2a55);
+    zoom: 100%;
+}
+
+.VerticalSpacer{
+    height: 100%;
+}
+
+.HorizontalSpacer{
+    width: 100%;
+}
+
+
+/*
+    Panel
+ */
+
+.PanelHeader{
+    height: 25px;
+    color: white;
+    background-color: #3b3b9b;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 5px;
+    font-size: 13px;
+    position: relative;
+    border: 1px solid #9d9d9d;
+    border-bottom: none;
+}
+
+.PanelHeader div:nth-child(2){
+    right: 5px;
+    position: absolute;
+}
+
+.PanelContent{
+    height: calc(100% - 25px);
+    background-color: #2a2a55;
+    overflow-y: auto;
+    border: 1px solid #9d9d9d;
+    border-top: none;
+}
+
+/*
+    ControlPanel
+ */
+#controlContent{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.ControlButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ControlButton > div{
+    width: 80%;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border: 2px solid #c6c6c6;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.ControlButton.disabled > div{
+    background-color: #9d9d9d;
+    border: 2px solid #5c5c5c;
+    cursor: default;
+}
+
+.ControlPathShower{
+    display: flex;
+    width: 100%;
+    font-size: 11px;
+    color: white;
+    margin-left: 10px;
+    overflow: hidden;
+    align-items: flex-start;
+    flex-direction: column;
+    cursor: default;
+    margin-bottom: 4px;
+    white-space: nowrap;
+}
+
+.ControlPathShower div:nth-child(2){
+    position: relative;
+    width: 100%;
+    margin-left: 10px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.ControlPathShower div:nth-child(2):after{
+    content: "";
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    right: 0;
+    pointer-events: none;
+    background-image: linear-gradient(to right, rgba(255,255,255,0), rgb(42, 42, 85) 90%);
+    height: 100%;
+    width: 30%;
+}
+
+/*
+    PlayersPanel
+ */
+
+.Player{
+    width: calc(100% - 10px);
+    height: 50px;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.Player:nth-child(even){
+    background-color: #333368;
+}
+
+.Player div:nth-child(1){
+    height: 40px;
+    width: 40px;
+    position: relative;
+}
+
+.Player > div:nth-child(1) > img{
+    height: 100%;
+    border-radius: 50%;
+}
+.PlayerHost{
+    position: absolute;
+    height: 20px;
+    bottom: 0;
+    left: 16px;
+}
+
+.PlayerReconnect{
+    position: absolute;
+    height: 20px;
+    bottom: 0;
+    left: 0;
+}
+
+.Player > div:nth-child(1) > div > img{
+    height: 100%;
+}
+
+.Player > div:nth-child(2){
+    margin-left: 5px;
+    color: white;
+    width: calc(100% - 45px - 40px + 10px);
+    overflow: hidden;
+}
+
+.Player > div:nth-child(3){
+    height: 80%;
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.Player > div:nth-child(3) > img{
+    height: 50%;
+    filter: invert(100%);
+}
+
+/*
+    Messages Panel
+ */
+
+.Message{
+    display: flex;
+    flex-flow: column;
+    color: white;
+    padding: 3px 10px;
+    font-size: 12px
+}
+
+.Message:nth-child(even){
+    background-color: #333368;
+}
+
+.Message > div:nth-child(2){
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+/*
+    Console Panel
+ */
+
+#console{
+    background-color: white;
+    font-family: LucidaGrande, sans-serif;
+}
+
+.ConsoleMessage{
+    display: flex;
+    border-bottom: 1px solid gray;
+    font-size: 12px;
+}
+
+.ConsoleMessage div:nth-child(1){
+    width: 60px;
+    background-color: gainsboro;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    border: 1px solid #aeaeae;
+    height: 18px;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    font-weight: 800;
+}
+
+.ConsoleMessage div:nth-child(2){
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    width: calc(100% - 72px);
+    font-weight: 800;
+}
+
+.ConsoleMessage div:nth-child(2) span{
+    width: 100%;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/*
+    Game Panel
+ */
+
+#GamePlayerDiv{
+    position: absolute;
+    top: 0;
+    z-index: 200;
+    height: 100%;
+    width: 100%;
+    background-color: #0a0a0a;
+}
+
+#GamePlayerDiv iframe {
+    border: none;
+    width: 100%;
+    height: 100%
+}
+
+#gamePanel{
+    background-color: #0a0a0a;
+}
+
+#gamePanel > iframe{
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/*
+    Overlay
+ */
+.Overlay{
+    background-color: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#addPlayerOverlay{
+    background-color: #2a2a55;
+    height: 200px;
+    width: 450px;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    padding: 10px 20px;
+    font-size: 21px;
+}
+
+#addPlayerOverlay span:nth-child(1){
+    text-align: center;
+    font-size: 40px;
+    margin-bottom: 20px;
+}
