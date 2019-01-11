@@ -54,6 +54,11 @@ html, body {
     width: 100%;
     height: 100%;
     box-shadow: 3px 3px 3px rgb(2, 17, 27);
+    
+}
+
+.flex-col img {
+    pointer-events: none;
 }
 
 #ButtonFwd:active, #ButtonBwd:active {
