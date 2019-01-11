@@ -21,11 +21,32 @@ html, body {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;    
-    background-color: rgb(29, 41, 73)
+    align-items: center;   
+    background-color: rgb(29, 41, 73);  
 }
 
-#ButtonFwd, #ButtonBwd {
+.flex-col {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;   
+    box-shadow: 3px 3px 3px rgb(2, 17, 27);
+}
+
+#hl {
+    height: 2px;
+    background-color: white;
+    width: 90%;
+}
+
+#deviceorientation {
+    color: white;
+    font-size: larger;
+}
+
+#ButtonFwd, #ButtonBwd, #ButtonFire {
     display: flex;
     justify-content: center;
     align-items: center;
