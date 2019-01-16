@@ -16,12 +16,30 @@ function handleOrientationEvent(orientation) {
   if(lastSentOrientation + 100 < new Date().getTime()){
     lastSentOrientation = new Date().getTime();
     var steer = (orientation.accelerationIncludingGravity.y / -5).toFixed(2);
+    
+    if (window.orientation === -90) {
+      steer *= -1;
+    }
+
     Tiltspot.msgToGame("move", {h: steer});
+  
     document.getElementById("deviceorientation").innerHTML = (steer);
+
+    if(steer < 0) {
+      document.getElementById("tilt-right").style.backgroundColor = "#205a67";
+      document.getElementById("tilt-left").style.backgroundColor = "#138058a6";
+    }else if(steer > 0){
+      document.getElementById("tilt-right").style.backgroundColor = "#138058a6";
+      document.getElementById("tilt-left").style.backgroundColor = "#205a67";
+    }else {
+      document.getElementById("tilt-left").style.backgroundColor = "#205a67";
+      document.getElementById("tilt-right").style.backgroundColor = "#205a67";
+    }
   }
 }
 
 window.onload = function() {
+
   document.getElementById("ButtonFwd").addEventListener("touchstart", moveFwd, false);
   document.getElementById("ButtonFwd").addEventListener("touchend", resetV, false);
   document.getElementById("ButtonBwd").addEventListener("touchstart", moveBwd, false);
