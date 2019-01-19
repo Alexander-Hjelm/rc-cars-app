@@ -72,6 +72,11 @@ html, body {
     font-size: larger;
 }
 
+#deviceorientation-text {
+    color: white;
+    font-size: larger;
+}
+
 #ButtonFwd, #ButtonBwd, #ButtonFire {
     display: flex;
     justify-content: center;
@@ -88,11 +93,11 @@ html, body {
 }
 
 #ButtonFire img {
-    width: 40%;
+    width: 30%;
 }
 
 #ButtonBwd img, #ButtonFwd img {
-    width: 25%;
+    width: 27%;
 }
 
 .flex-col img {
