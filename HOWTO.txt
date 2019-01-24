@@ -1,12 +1,16 @@
-This is a how to guide to use the Tiltspot Game Tester.
+This is a How To guide on how to use the Tiltspot Game Tester.
 
 *****************
 ** INFORMATION **
 *****************
-This is a application made by Phonion Technologies to be used to test games before publishing it to Tiltspot. The application should not be used for other purposes than testing.
+This is a application made by Phonion Technologies to be used to test games before publishing it to Tiltspot.
+The application should not be used for other purposes than testing.
+
+You are not supposed to integrate this game tester into your game project.
+This is a standalone program which only requires paths to your game's game, controller and assets folders.
 
 To read a more detailed guide visit the documentation page:
-https://tiltspot.tv/getting_started/game_tester
+https://dev.tiltspot.tv/getting_started/game_tester
 
 *******************
 ** Prerequisites **
@@ -18,7 +22,7 @@ https://tiltspot.tv/getting_started/game_tester
 ** Guide **
 ***********
 [ Before starting ]
-Before you start using the Tiltspot Game Tester you should unzip the .zip-file and install all NPM packages which is required. To install the packages you should open a Command Prompt or a Terminal inside the root directory of the game tester and run this command: "npm install".
+Before you start using the Tiltspot Game Tester you should unzip the .zip-file and install all NPM packages which are required. To install the packages you should open a Command Prompt or a Terminal inside the root directory of the game tester and run this command: "npm install".
 
 [ Configurations ]
 In the main folder of the application you will find a file named config.js. This is where you can configure the Tiltspot Game Tester to your preferences. Here is an explanation of the properties:

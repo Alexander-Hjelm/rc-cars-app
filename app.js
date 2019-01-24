@@ -15,6 +15,13 @@ let computer = null;
 let mobiles = [];
 let gameIsUnity = checkIfUnity(config.Path_To_Game);
 let controllerIsUnity = checkIfUnity(config.Path_To_Controller);
+let useUnity = false;
+
+let rootAssetsFolder = "";
+let rootGameFolder = "";
+let rootControllerFolder = "";
+
+setRootFolders();
 
 console.log("*********** Tiltspot Game Tester ***************");
 console.log("   The Tiltspot Game Tester is now running!");
@@ -42,15 +49,27 @@ app.get('/bundle_mobile.js', function (req, res) {
 });
 
 app.get('/assets/*', function (req, res) {
-    res.sendFile(config.Path_To_Assets+"/"+req.originalUrl.split("assets/")[1]);
+    res.sendFile(config.Path_To_Assets+"/"+req.originalUrl.slice(8));
 });
 
 app.get('/game/*', function (req, res) {
-    res.sendFile(config.Path_To_Game+"/"+req.originalUrl.split("game/")[1]);
+    res.sendFile(config.Path_To_Game+"/"+req.originalUrl.slice(6));
 });
 
 app.get('/controller/*', function (req, res) {
-    res.sendFile(config.Path_To_Controller+"/"+req.originalUrl.split("controller/")[1]);
+    res.sendFile(config.Path_To_Controller+"/"+req.originalUrl.slice(12));
+});
+
+app.get('/'+rootAssetsFolder+'/*', function (req, res) {
+    res.sendFile(config.Path_To_Assets+"/"+req.originalUrl.split(rootAssetsFolder+"/")[1]);
+});
+
+app.get('/'+rootGameFolder+'/*', function (req, res) {
+    res.sendFile(config.Path_To_Game+"/"+req.originalUrl.split(rootGameFolder+"/")[1]);
+});
+
+app.get('/'+rootControllerFolder+'/*', function (req, res) {
+    res.sendFile(config.Path_To_Controller+"/"+req.originalUrl.split(rootControllerFolder+"/")[1]);
 });
 
 app.get('/Build/*', function (req, res) {
@@ -65,25 +84,11 @@ app.get('/TemplateData/*', function (req, res) {
     }
 });
 
-app.get('/js_api_game', function (req, res) {
-    res.sendFile('src/js/js_api_game.js', {root: path.join(__dirname, './')});
-});
-
-app.get('/js_api_controller', function (req, res) {
-    res.sendFile('src/js/js_api_controller.js', {root: path.join(__dirname, './')});
-});
-
-app.get('/unity_api_game', function (req, res) {
-    res.sendFile('src/unity/unity_api_game.js', {root: path.join(__dirname, './')});
-});
-
-app.get('/unity_api_controller', function (req, res) {
-    res.sendFile('src/unity/unity_api_controller.js', {root: path.join(__dirname, './')});
-});
-
 app.get('/gameHTML', function (req, res) {
     if(gameIsUnity) res.sendFile('src/unity/unity_index_game.html', {root: path.join(__dirname, './')});
-    else res.sendFile(config.Path_To_Game+"/index.html");
+    else{
+        res.sendFile(config.Path_To_Game+"/index.html");
+    }
 });
 
 app.get('/controllerHTML', function (req, res) {
@@ -123,8 +128,13 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('msgToGame', function (msg, data) {
         if(computer){
+            if(useUnity) {console.log("msgToUnity", msg, data)} // send msg to Unity
             io.to(computer.id).emit("msgToGame", socket.id, msg, data);
         }
+    });
+
+    socket.on('msgToServer', function(msg, data){
+        handleMsgToServer(msg, data);
     });
 
     socket.on('disconnect', function () {
@@ -157,12 +167,52 @@ function initSocket(socket) {
             gamePath: config.Path_To_Game,
             controllerPath: config.Path_To_Controller,
             assetsPath: config.Path_To_Assets,
+            unityPort: config.Unity_Port,
             gameIsUnity: gameIsUnity,
         });
         for(let i=0; i<mobiles.length; i++){
             io.to(mobiles[i].id).emit("computerConnected");
         }
     }
+}
+
+/**********
+ * Handle server messages
+ *********/
+function handleMsgToServer(msg, data) {
+    switch (msg) {
+        case "useUnity":
+            useUnity = data;
+            break;
+    }
+}
+
+/****
+ * Functions
+ ****/
+
+function setRootFolders() {
+    if(config.Path_To_Assets.indexOf("\\") !== -1){
+        rootAssetsFolder = config.Path_To_Assets.replace(new RegExp("\\\\", 'g'), "/").split("/");
+    }else rootAssetsFolder = config.Path_To_Assets.split("/");
+
+    if(config.Path_To_Game === null || config.Path_To_Game.trim() === ""){
+        console.log("!!! NO GAME PATH IS PROVIDED IN THE CONFIG FILE !!!");
+        process.exit(1);
+    }else if(config.Path_To_Game.indexOf("\\") !== -1){
+        rootGameFolder = config.Path_To_Game.replace(new RegExp("\\\\", 'g'), "/").split("/");
+    }else rootGameFolder = config.Path_To_Game.split("/");
+
+    if(config.Path_To_Controller === null || config.Path_To_Controller.trim() === ""){
+        console.log("!!! NO CONTROLLER PATH IS PROVIDED IN THE CONFIG FILE !!!");
+        process.exit(1);
+    }else if(config.Path_To_Controller.indexOf("\\") !== -1){
+        rootControllerFolder = config.Path_To_Controller.replace(new RegExp("\\\\", 'g'), "/").split("/");
+    }else rootControllerFolder = config.Path_To_Controller.split("/");
+
+    rootAssetsFolder = rootAssetsFolder.pop() || rootAssetsFolder.pop();
+    rootGameFolder = rootGameFolder.pop() || rootGameFolder.pop();
+    rootControllerFolder = rootControllerFolder.pop() || rootControllerFolder.pop();
 }
 
 function checkIfMobileDevice(userAgent) {
@@ -174,5 +224,5 @@ function checkIfMobileDevice(userAgent) {
 }
 
 function checkIfUnity(url) {
-    return fs.existsSync(url+"/Build");
+    return fs.existsSync(url+"/Build") && fs.existsSync(url+"/Build/UnityLoader.js");
 }
