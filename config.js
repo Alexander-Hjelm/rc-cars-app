@@ -17,7 +17,7 @@ module.exports = {
      *
      *  Default: 8080
      */
-    Server_Port: 8081,
+    Server_Port: 8080,
 
     /** (Required)
      *  Path_To_Game is where the location of the directory containing the actual game you want to test.
