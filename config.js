@@ -10,14 +10,14 @@ module.exports = {
      *
      *  Default value: "localhost"
      */
-    Server_IP: "192.168.177.161",
+    Server_IP: "localhost",
 
     /**
      *  Server_Port tells the server which port it should listen on.
      *
      *  Default: 8080
      */
-    Server_Port: 8081,
+    Server_Port: 8080,
 
     /** (Required)
      *  Path_To_Game is where the location of the directory containing the actual game you want to test.
@@ -26,7 +26,7 @@ module.exports = {
      *
      *  Default: ""
      */
-    Path_To_Game: "/Users/mathiasudahl/Desktop/rc-cars-app/build/game",
+    Path_To_Game: "/home/groove/Tiltspot_Game_Tester_v1.0.0/build/game",
 
     /** (Required)
      *  Path_To_Controller is where the location of the directory containing the actual controller you want to test.
@@ -34,7 +34,7 @@ module.exports = {
      *
      *  Default: ""
      */
-    Path_To_Controller: "/Users/mathiasudahl/Desktop/rc-cars-app/controller",
+    Path_To_Controller: "/home/groove/Tiltspot_Game_Tester_v1.0.0/controller",
 
     /**
      *  Path_To_Assets is the path where the assets for both controller and game is located.
