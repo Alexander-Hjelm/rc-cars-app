@@ -25,6 +25,18 @@ html, body, #app, #Layout {
     width: 100%;
 }
 
+.infoBtn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.infoBtn > img{
+    width: 100%;
+}
 
 /*
     Panel
@@ -36,7 +48,7 @@ html, body, #app, #Layout {
     background-color: #3b3b9b;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     padding: 0 5px;
     font-size: 13px;
     position: relative;
@@ -44,9 +56,17 @@ html, body, #app, #Layout {
     border-bottom: none;
 }
 
-.PanelHeader div:nth-child(2){
-    right: 5px;
-    position: absolute;
+.PanelBtns{
+    height: 100%;
+    display: flex;
+}
+
+.PanelBtns > div{
+    margin-right: 5px;
+}
+
+.PanelBtns > div:last-child{
+    margin-right: 0;
 }
 
 .PanelContent{
@@ -87,6 +107,18 @@ html, body, #app, #Layout {
     background-color: #9d9d9d;
     border: 2px solid #5c5c5c;
     cursor: default;
+}
+
+#useUnity{
+    color: white;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    margin-left: 6px;
+}
+
+#useUnity > span{
+    margin-right: 10px;
 }
 
 .ControlPathShower{
@@ -191,16 +223,18 @@ html, body, #app, #Layout {
 /*
     Messages Panel
  */
+#messagesContent{
+    display: flex;
+    flex-direction: column-reverse;
+}
 
 .Message{
-    display: flex;
-    flex-flow: column;
     color: white;
     padding: 3px 10px;
     font-size: 12px
 }
 
-.Message:nth-child(even){
+.Message.colored{
     background-color: #333368;
 }
 
@@ -274,6 +308,7 @@ html, body, #app, #Layout {
 
 #gamePanel{
     background-color: #0a0a0a;
+    position: relative;
 }
 
 #gamePanel > iframe{
@@ -297,9 +332,8 @@ html, body, #app, #Layout {
     align-items: center;
 }
 
-#addPlayerOverlay{
+.infoOverlay{
     background-color: #2a2a55;
-    height: 200px;
     width: 450px;
     border-radius: 25px;
     display: flex;
@@ -309,8 +343,143 @@ html, body, #app, #Layout {
     font-size: 21px;
 }
 
-#addPlayerOverlay span:nth-child(1){
+.infoOverlay > span{
+    margin-bottom: 10px;
+}
+
+.infoOverlay span:first-child{
     text-align: center;
     font-size: 40px;
     margin-bottom: 20px;
+}
+
+#fullscreen{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 8px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+#fullscreenImg{
+    width: 45px;
+}
+
+.stdPanIcon{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.stdPanIcon > img{
+    height: 80%;
+}
+
+#settings{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#settingsBg{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#settingsBox{
+    background-color: #2a2a55;
+    width: 25%;
+    max-height: 80%;
+    padding: 15px;
+    color: white;
+    border: 1px solid white;
+    z-index: 1;
+}
+
+#settingsTitle{
+    font-size: 25px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#settingsContent{
+    max-height: calc(80vh - 50px);
+    overflow-y: auto;
+}
+
+#settingsFooter{
+    height: 50px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.settingsBtn{
+    height: 80%;
+    width: 30%;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border: 2px solid #c6c6c6;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+#settingsContent > .numberRow{
+
+}
+
+#settingsContent > .numberRow > input{
+    margin-left: 10px;
+}
+
+#settingsContent > .textRow{
+
+}
+
+#settingsContent > .textRow > input{
+    margin-left: 10px;
+}
+
+#settingsContent > .checkBoxRow{
+
+}
+
+#settingsContent > .checkBoxRow > div{
+    margin-left: 10px;
+}
+
+#settingsContent > .settingsTitle{
+    font-size: 22px;
+    font-weight: 600;
+}
+
+#settingsContent > .radioRow{
+
+}
+
+#settingsContent > .radioRow > div{
+    margin-left: 10px;
+}
+
+.settingsRow{
+    margin-bottom: 5px;
 }

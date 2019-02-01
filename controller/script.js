@@ -15,9 +15,9 @@ function resetV() {
 function handleOrientationEvent(orientation) {
   if(lastSentOrientation + 100 < new Date().getTime()){
     lastSentOrientation = new Date().getTime();
-    var steer = (orientation.accelerationIncludingGravity.y / -5).toFixed(2);
+    var steer = (orientation.accelerationIncludingGravity.y / 5).toFixed(2);
     
-    if (window.orientation === -90) {
+    if (orientation.accelerationIncludingGravity.x < 0) {
       steer *= -1;
     }
 
