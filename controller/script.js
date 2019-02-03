@@ -12,6 +12,10 @@ function resetV() {
   Tiltspot.msgToGame("move", {v: 0.0});
 }
 
+function fire() {
+  Tiltspot.msgToGame("fire", {});
+}
+
 function handleOrientationEvent(orientation) {
   if(lastSentOrientation + 100 < new Date().getTime()){
     lastSentOrientation = new Date().getTime();
@@ -44,6 +48,7 @@ window.onload = function() {
   document.getElementById("ButtonFwd").addEventListener("touchend", resetV, false);
   document.getElementById("ButtonBwd").addEventListener("touchstart", moveBwd, false);
   document.getElementById("ButtonBwd").addEventListener("touchend", resetV, false);
+  document.getElementById("ButtonFire").addEventListener("touchstart", fire, false);
 
   window.addEventListener("devicemotion", handleOrientationEvent, false);
 }
