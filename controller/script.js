@@ -25,7 +25,7 @@ function handleOrientationEvent(orientation) {
       steer *= -1;
     }
 
-    Tiltspot.msgToGame("move", {h: steer});
+    Tiltspot.msgToGame("move", {h: steer*0.5});
   
     document.getElementById("deviceorientation").innerHTML = (steer);
 
