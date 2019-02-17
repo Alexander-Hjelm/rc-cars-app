@@ -46,7 +46,7 @@ and
   }
 }
 ```
-
+---
 #### Move
 ```
 {
@@ -58,7 +58,7 @@ and
 ```
 
 The server will not respond.
-
+---
 #### Ready
 ```
 {
@@ -91,6 +91,8 @@ The server will not respond.
 The server will not respond.
 
 ### Server to Client messages
+
+#### Start
 ```
 {
   'message': 'start',
