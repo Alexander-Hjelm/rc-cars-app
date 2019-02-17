@@ -46,6 +46,11 @@ and
   }
 }
 ```
+
+Where:
+* **color-reserved** is the color that was recently picked. No player may now pick this color.
+* **color-unreserved** is the color that was recently switch from, if any. All players may now pick this color.
+
 ---
 #### Move
 ```
