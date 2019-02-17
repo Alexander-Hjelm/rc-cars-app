@@ -1,20 +1,10 @@
 # Menu flow
 
----------------------
-|   Car selection   |
----------------------
-         |
----------------------
-|  Color selection  |
----------------------
-         |
----------------------
-|       Ready       |
----------------------
+|   Car selection   | -> |  Color selection  | -> |       Ready       |
 
 # Menu functionality
 
-## Car selection menu
+## Color selection menu
 
 ### Client to Server messages
 
@@ -69,5 +59,6 @@ The server will not respond.
 
 ### Buttons
 
-* **Back**: Moves to the Car selection menu on the controller. Sends no message to the server.
+* **Color selection**: A list of buttons that each send a "Color Selected" message to the server.
 * **Ready**: Moves to the Ready menu on the controller. Sends a "Ready" message to the server.
+* **Back**: Moves to the Car selection menu on the controller. Sends no message to the server.
