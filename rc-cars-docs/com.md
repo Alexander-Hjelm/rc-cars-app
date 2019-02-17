@@ -1,10 +1,10 @@
 # Menu flow
 
-|   Car selection   | -> |  Color selection  | -> |       Ready       |
+| Car/Color selection | -> |        Ready        |
 
 # Menu functionality
 
-## Color selection menu
+## Car/Color Selection menu
 
 ### Client to Server messages
 
@@ -47,6 +47,18 @@ and
 }
 ```
 
+#### Move
+```
+{
+  'message': 'move',
+  'data': {
+    'value' : <integer>,
+  }
+}
+```
+
+The server will not respond.
+
 #### Ready
 ```
 {
@@ -60,5 +72,34 @@ The server will not respond.
 ### Buttons
 
 * **Color selection**: A list of buttons that each send a "Color Selected" message to the server.
+* **Left/Right**: Two arrow buttons that send Move messages to the server with value = 1 or value = -1.
 * **Ready**: Moves to the Ready menu on the controller. Sends a "Ready" message to the server.
 * **Back**: Moves to the Car selection menu on the controller. Sends no message to the server.
+
+## Ready menu
+
+### Client to Server messages
+
+#### Unready
+```
+{
+  'message': 'unready',
+  'data': {}
+}
+```
+
+The server will not respond.
+
+### Server to Client messages
+```
+{
+  'message': 'start',
+  'data': {}
+}
+```
+
+The client will not respond. It will proceed with loading the in-game controller.
+
+### Buttons
+
+* **Unready**: Moves to the Car/Color Selection menu on the controller. Sends an "Unready" message to the server.
