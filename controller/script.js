@@ -209,7 +209,7 @@ window.onload = function() {
         //Tiltspot.msgToGame('color-unreserved', temp2);
         //temp.classList.remove("active");
       }else {
-        Tiltspot.msgToGame('color-reserved', temp2);
+        Tiltspot.msgToGame('color-selected', temp2);
         temp.classList.add("active");
       }
     });
