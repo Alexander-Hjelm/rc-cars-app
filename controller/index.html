@@ -3,36 +3,81 @@
 	<head>
 		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height">
 
+		<link href="https://fonts.googleapis.com/css?family=Bungee+Inline" rel="stylesheet">
 		<link rel="stylesheet" href="styles.css">
 		<script src='https://tiltspot.tv/api/javascript/controllerAPIs/js-controller-1.0.0.js' rel='script' type='application/javascript'></script>
 		<script src ='script.js'></script>
 	</head>
 	<body class="noselect">
-		<div class="flex-container">
-			<div class="flex-row" id="tilt-guide">
-				<div class="flex-col" id="tilt-left">
-					<img class="noselect" src="tilt-left.png">
+		<div class="flex-container" id="drive">
+			<div class="flex-row driving-row" id="tilt-guide">
+				<div class="flex-col driving-col" id="tilt-left">
+					<img class="noselect" src="imgs/tilt-left.png">
 				</div>
-				<div class="flex-col">
-					<p><b>Tilt to steer the car</b></p>
+				<div class="flex-col driving-col">
+					<p><b>TILT TO STEER</b></p>
 				</div>
-				<div class="flex-col" id="tilt-right">
-					<img class="noselect" src="tilt-right.png">
+				<div class="flex-col driving-col" id="tilt-right">
+					<img class="noselect" src="imgs/tilt-right.png">
 				</div>
 			</div>
-			<div class="flex-row">
-				<div class="flex-col">
-					<div class="noselect" id="ButtonFire"><img class="noselect" src="power-up.png"></div>
-					<div class="noselect" id="ButtonBwd"><img class="noselect" src="reverse.png"></div>
+			<div class="flex-row driving-row">
+				<div class="flex-col driving-col">
+					<div class="noselect" id="buttonFire"><img class="noselect" src="imgs/power-up.png"></div>
+					<div class="noselect" id="buttonBwd"><img class="noselect" src="imgs/reverse.png"></div>
 				</div>
-				<div class="flex-col noselect">
+				<div class="flex-col-start noselect">
+					<p class="noselect" id="menu">Menu</p>
 					<p class="noselect" id="deviceorientation-text">Tilt</p>
 					<p class="noselect" id="deviceorientation"></p>
 				</div>
-				<div class="flex-col">
-					<div class="noselect" id="ButtonFwd"><img class="noselect" src="gas.png"></div>
+				<div class="flex-col driving-col">
+					<div class="noselect" id="buttonFwd"><img class="noselect" src="imgs/gas.png"></div>
 				</div>
 			</div>
 		</div>
+
+		<div class="flex-container" id="loading">
+			<p>loading..</p>
+		</div>
+
+		<div class="flex-container" id="color-pick">
+				<p id="color-pick-header"><b>PICK YOUR CAR AND COLOR:</b></p>
+				<div class="flex-row deactivate">
+					<div class="flex-col" id="left">
+						<img class="noselect car" src="imgs/left.png">
+					</div>
+					<div class="flex-col">
+						<p id="color-text">switch car</p>
+					</div>
+					<div class="flex-col" id="right">
+						<img class="noselect car" src="imgs/right.png">
+					</div>
+				</div>
+				<div class="flex-row deactivate">
+					<div class="flex-col colors" id="color-red"></div>
+					<div class="flex-col colors" id="color-blue"></div>
+					<div class="flex-col colors" id="color-green"></div>
+				</div>
+				<div class="flex-row deactivate">
+					<div class="flex-col colors" id="color-brown"></div>
+					<div class="flex-col colors" id="color-purple"></div>
+				</div>
+				<div class="flex-row deactivate">
+					<div class="flex-col colors" id="color-yellow"></div>
+					<div class="flex-col colors" id="color-cyan"></div>
+					<div class="flex-col colors" id="color-white"></div>
+				</div>
+				<div class="flex-row">
+					<div class="flex-col" id="ready">
+						READY
+					</div>
+				</div>
+		</div>
+
+		<div class="flex-container" id="menu-open">
+			<p id="menu-close">close</p>
+		</div>
+
 	</body>
 </html>

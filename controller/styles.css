@@ -3,6 +3,7 @@ html, body {
     width: 100%;
     padding: 0;
     margin: 0;
+    font-family: 'Bungee Inline', cursive;
 }
 
 .noselect {
@@ -32,6 +33,10 @@ html, body {
     flex-direction: row;
     justify-content: center;
     align-items: center;   
+    
+}
+
+.driving-row {
     background-color: rgb(40, 58, 62);  
 }
 
@@ -42,7 +47,24 @@ html, body {
     flex-direction: column;
     justify-content: center;
     align-items: center;   
+}
+
+.driving-col {
     box-shadow: 3px 3px 3px rgba(73, 86, 95, 0.33);
+}
+
+.flex-col-start {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;   
+    box-shadow: 3px 3px 3px rgba(73, 86, 95, 0.33);
+}
+
+.flex-col img {
+    pointer-events: none;
 }
 
 #hl {
@@ -55,8 +77,9 @@ html, body {
     height: 15%;
     background-color: #205a67;
     font-size: large;
-    color: white;
+    color: whitesmoke;
     text-align: center;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 #tilt-guide .flex-col {
@@ -68,16 +91,18 @@ html, body {
 }
 
 #deviceorientation {
-    color: white;
+    color: gray;
     font-size: larger;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 #deviceorientation-text {
-    color: white;
+    color: gray;
     font-size: larger;
+    font-family: 'Courier New', Courier, monospace;
 }
 
-#ButtonFwd, #ButtonBwd, #ButtonFire {
+#buttonFwd, #buttonBwd, #buttonFire {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -88,22 +113,132 @@ html, body {
     
 }
 
-#ButtonFwd:active, #ButtonBwd:active, #ButtonFire:active {
+#buttonFwd:active, #buttonBwd:active, #buttonFire:active, #menu:active {
     background-color: rgb(65, 71, 88)
 }
 
-#ButtonFire img {
+#buttonFire img {
     width: 30%;
 }
 
-#ButtonBwd img, #ButtonFwd img {
+#buttonBwd img, #buttonFwd img {
     width: 27%;
 }
 
-.flex-col img {
-    pointer-events: none;
+#menu {
+    height: 100px;
+    width: 100%;
+    background-color: #2a2a2973;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin: 0;
+    box-shadow: 3px 3px 3px rgba(46, 49, 51, 0.8);
+    line-height: 100px;
+    color: white;
 }
 
+#menu-open {
+    display: none;
+    height: calc(100% - 80px);
+    width: calc(100% - 80px);
+    position: absolute;
+    margin: 40px;
+    top: 0;
+    left: 0;
+    background-color: #000000a8;
+}
 
+#menu-close {
+    color: white;
+}
 
+#loading {
+    display: none;
+    color: white;
+}
 
+#color-pick {
+    display: none;
+}
+
+#drive {
+    display: none;
+}
+
+.car {
+    width: 20%;
+}
+
+#color-pick-header {
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+}
+
+#ready {
+    width: 25%;
+    height: 60%;
+    margin-bottom: 10px;
+    background-color: green;
+}
+
+#left:active, #right:active {
+    filter: opacity(20%);
+}
+
+/****
+Colors! 
+*/
+
+#color-text {
+    color: white;
+}
+
+.colors {
+    width: 20%;
+    height: 40%;
+    margin: 20px;
+    box-shadow: inset 0 0 0px 3px #b3b3b382;
+    -moz-box-shadow: inset 0 0 0px 3px #b3b3b382;
+    -webkit-box-shadow: inset 0 0 0px 3px #b3b3b382;
+}
+					    
+#color-green{
+    background-color: rgb(0, 128, 0);
+}
+
+#color-purple{
+    background-color: rgb(128, 0, 128);
+}
+
+#color-red{
+    background-color: rgb(255, 0, 0);
+}
+						      
+#color-blue{
+    background-color: rgb(0, 31, 255);
+}
+								
+#color-brown{
+    background-color: rgb(139, 69, 19);
+}
+
+#color-yellow{
+    background-color: rgb(255, 255, 0);
+}
+						           
+#color-cyan{
+    background-color: rgb(0, 255, 255);
+}
+								
+#color-white{
+    background-color: rgb(255, 255, 255);
+}	
+
+#color-green:active, #color-purple:active, #color-red:active, #color-blue:active, #color-brown:active, #color-yellow:active, #color-cyan:active, #color-white:active {
+    filter: opacity(30%);
+}
+
+.active {
+    filter: opacity(50%);
+}
