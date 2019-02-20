@@ -78,29 +78,30 @@ function updateOpacity(className, opacity){
 
 function updateColor (msg, color){
   var temp; 
+  console.log(color);
   switch(color){
-    case {r: "0", g: "128", b: "0"}:
+    case {r: 0, g: 128, b: 0}:
       temp = "color-green"
       break;
-    case {r: "128", g: "0", b: "128"}:
+    case {r: 128, g: 0, b: 128}:
       temp = "color-purple"
       break;
-    case {r: "255", g: "0", b: "0"}:
+    case {r:  255, g: 0, b: 0}:
       temp = "color-red"
       break;
-    case {r: "0", g: "31", b: "255"}:
+    case {r: 0, g: 31, b: 255}:
       temp = "color-blue"
       break;
-    case {r: "139", g: "69", b: "19"}:
+    case {r: 139, g: 69, b: 19}:
       temp = "color-brown"
       break;
-    case {r: "255", g: "255", b: "0"}:
+    case {r: 255, g: 255, b: 0}:
       temp = "color-yellow"
       break;
-    case {r: "0", g: "255", b: "255"}:
+    case {r: 0, g: 255, b: 255}:
       temp = "color-cyan"
       break;
-    case {r: "255", g: "255", b: "255"}:
+    case {r: 255, g: 255, b: 255}:
       temp = "color-white"
       break;
     default:
@@ -177,28 +178,28 @@ window.onload = function() {
       var temp2; 
       switch(e.target.id){
         case "color-green":
-          temp2 = {r: "0", g: "128", b: "0"}
+          temp2 = {r: 0, g: 128, b: 0}
           break;
         case "color-purple":
-          temp2 = {r: "128", g: "0", b: "128"}
+          temp2 = {r: 128, g: 0, b: 128}
           break;
         case "color-red":
-          temp2 = {r: "255", g: "0", b: "0"}
+          temp2 = {r: 255, g: 0, b: 0}
           break;
         case "color-blue":
-          temp2 = {r: "0", g: "31", b: "255"}
+          temp2 = {r: 0, g: 31, b: 255}
           break;
         case "color-brown":
-          temp2 = {r: "139", g: "69", b: "19"}
+          temp2 = {r: 139, g: 69, b: 19}
           break;
         case "color-yellow":
-          temp2 = {r: "255", g: "255", b: "0"}
+          temp2 = {r: 255, g: 255, b: 0}
           break;
         case "color-cyan":
-          temp2 = {r: "0", g: "255", b: "255"}
+          temp2 = {r: 0, g: 255, b: 255}
           break;
         case "color-white":
-          temp2 = {r: "255", g: "255", b: "255"}
+          temp2 = {r: 255, g: 255, b: 255}
           break;
         default:
           console.log("none");
