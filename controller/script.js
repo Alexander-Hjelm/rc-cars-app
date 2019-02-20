@@ -5,16 +5,13 @@ Tiltspot.onGameMsg = function (msg, data) {
   switch (msg) { 
     case 'color-reserved':
       updateColor(msg, data);
-      break;
     case 'color-unreserved':
       updateColor(msg, data);
-      break;
     case 'start': //timeout kan tas bort om loading ikke er ønskelig
       updateScreen(0);
       setTimeout(function () {
         updateScreen(2);
       }, 1000);
-      break;
   }
 }
 
@@ -79,24 +76,35 @@ function updateOpacity(className, opacity){
     }
 }
 
-function updateColor (msg, data){
+function updateColor (msg, color){
   var temp; 
-  if(data.r == 0 && data.g == 128 && data.b == 0){
-    temp = "color-green";
-  }else if(data.r == 128 && data.g == 0 && data.b == 128){
-    temp = "color-purple";
-  }else if(data.r == 255 && data.g == 0 && data.b == 0){
-    temp = "color-red";
-  }else if(data.r == 0 && data.g == 31 && data.b == 255){
-    temp = "color-blue";
-  }else if(data.r == 139 && data.g == 69 && data.b == 19){
-    temp = "color-brown";
-  }else if(data.r == 255 && data.g == 255 && data.b == 0){
-    temp = "color-yellow";
-  }else if(data.r == 0 && data.g == 255 && data.b == 255){
-    temp = "color-cyan";
-  }else if(data.r == 255 && data.g == 255 && data.b == 255){
-    temp = "color-white";
+  switch(color){
+    case {r: "0", g: "128", b: "0"}:
+      temp = "color-green"
+      break;
+    case {r: "128", g: "0", b: "128"}:
+      temp = "color-purple"
+      break;
+    case {r: "255", g: "0", b: "0"}:
+      temp = "color-red"
+      break;
+    case {r: "0", g: "31", b: "255"}:
+      temp = "color-blue"
+      break;
+    case {r: "139", g: "69", b: "19"}:
+      temp = "color-brown"
+      break;
+    case {r: "255", g: "255", b: "0"}:
+      temp = "color-yellow"
+      break;
+    case {r: "0", g: "255", b: "255"}:
+      temp = "color-cyan"
+      break;
+    case {r: "255", g: "255", b: "255"}:
+      temp = "color-white"
+      break;
+    default:
+      console.log("none");
   }
 
   if(msg == 'color-reserved'){
@@ -201,7 +209,7 @@ window.onload = function() {
         //Tiltspot.msgToGame('color-unreserved', temp2);
         //temp.classList.remove("active");
       }else {
-        Tiltspot.msgToGame('color-selected', temp2);
+        Tiltspot.msgToGame('color-reserved', temp2);
         temp.classList.add("active");
       }
     });
