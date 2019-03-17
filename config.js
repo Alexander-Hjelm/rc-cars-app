@@ -46,7 +46,7 @@ module.exports = {
      *  The path could also be a URL which returns a html page. For dedicated severs.
      *  Default: ""
      */
-    Path_To_Game: "",
+    Path_To_Game: "/home/groove/projects/rc-cars-app/build/game",
 
     /** (Required)
      *  Path_To_Controller is where the location of the directory containing the actual controller you want to test.
@@ -54,7 +54,7 @@ module.exports = {
      *
      *  Default: ""
      */
-    Path_To_Controller: "",
+    Path_To_Controller: "/home/groove/projects/rc-cars-app/controller",
 
     /**
      *  Path_To_Assets is the path where the assets for both controller and game is located.
