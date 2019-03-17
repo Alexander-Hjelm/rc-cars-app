@@ -1,3 +1,8 @@
+/***
+ * https://github.com/zeit/pkg
+ *
+ */
+
 let express = require("express"),
     http = require("http"),
     path = require("path"),
@@ -6,16 +11,17 @@ let express = require("express"),
     app = express(),
     server = http.createServer(app),
     io = require('socket.io')(server),
+    UnityHandler = require("./unityHandler")(),
     config = require("./config");
 
 server.listen(config.Server_Port, config.Server_IP);
+UnityHandler.setSocketIO(io);
 app.use(cookieParser());
 
 let computer = null;
 let mobiles = [];
 let gameIsUnity = checkIfUnity(config.Path_To_Game);
 let controllerIsUnity = checkIfUnity(config.Path_To_Controller);
-let useUnity = false;
 
 let rootAssetsFolder = "";
 let rootGameFolder = "";
@@ -110,7 +116,9 @@ app.get('/*', function (req, res) {
 
 io.sockets.on('connection', function (socket) {
 
-    initSocket(socket);
+    socket.on('init', function(isMobile){
+        initSocket(socket, isMobile);
+    });
 
     socket.on('msgToMobile', function (sId, msg, data) {
         io.to(sId).emit("msgToMobile", msg, data);
@@ -128,7 +136,6 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('msgToGame', function (msg, data) {
         if(computer){
-            if(useUnity) {console.log("msgToUnity", msg, data)} // send msg to Unity
             io.to(computer.id).emit("msgToGame", socket.id, msg, data);
         }
     });
@@ -137,9 +144,19 @@ io.sockets.on('connection', function (socket) {
         handleMsgToServer(msg, data);
     });
 
+    socket.on('msgToUnity', function (msg, data) {
+        console.log("msgToUnity", msg, data);
+         switch (msg) {
+             case "controllersReady":
+                 UnityHandler.controllersReady(data);
+                 break;
+         }
+    });
+
     socket.on('disconnect', function () {
         if (computer !== null && socket.id === computer.id) {
             computer = null;
+            UnityHandler.reset();
             for (let i = 0; i < mobiles.length; i++) {
                 io.to(mobiles[i].id).emit("computerDisconnected");
             }
@@ -147,7 +164,10 @@ io.sockets.on('connection', function (socket) {
             for (let i = 0; i < mobiles.length; i++) {
                 if (socket.id === mobiles[i].id) {
                     mobiles.splice(i, 1);
-                    if (computer !== null) io.to(computer.id).emit("mobileDisconnect", {sId: socket.id});
+                    if (computer !== null){
+                        UnityHandler.onMobileDisconnect(socket.id);
+                        io.to(computer.id).emit("mobileDisconnect", {sId: socket.id});
+                    }
                 }
             }
         }
@@ -155,14 +175,15 @@ io.sockets.on('connection', function (socket) {
 
 });
 
-function initSocket(socket) {
-    if(checkIfMobileDevice(socket.request.headers['user-agent'])){
+function initSocket(socket, isMobile) {
+    if(isMobile){
         mobiles.push(socket);
         io.to(socket.id).emit("init", {
             computerConnected: !!computer
         })
     }else{
         computer = socket;
+        UnityHandler.setComputer(socket);
         io.to(socket.id).emit("init", {
             gamePath: config.Path_To_Game,
             controllerPath: config.Path_To_Controller,
@@ -182,7 +203,19 @@ function initSocket(socket) {
 function handleMsgToServer(msg, data) {
     switch (msg) {
         case "useUnity":
-            useUnity = data;
+            UnityHandler.setActive(data);
+            break;
+        case "msgToUnity":
+            UnityHandler.sendMsg(data.id, data.msg, data.data);
+            break;
+        case "controllerDisconnect":
+            UnityHandler.onMobileDisconnect(data);
+            break;
+        case "controllerConnect":
+            UnityHandler.onMobileConnect(data);
+            break;
+        case "controllerReconnect":
+            UnityHandler.onMobileReconnect(data);
             break;
     }
 }
@@ -191,22 +224,22 @@ function handleMsgToServer(msg, data) {
  * Functions
  ****/
 
+function getMobileIdBySId(sId) {
+    for(let i=0; i<mobiles.length; i++){
+        if(mobiles[i].id === sId) return i;
+    }
+}
+
 function setRootFolders() {
     if(config.Path_To_Assets.indexOf("\\") !== -1){
         rootAssetsFolder = config.Path_To_Assets.replace(new RegExp("\\\\", 'g'), "/").split("/");
     }else rootAssetsFolder = config.Path_To_Assets.split("/");
 
-    if(config.Path_To_Game === null || config.Path_To_Game.trim() === ""){
-        console.log("!!! NO GAME PATH IS PROVIDED IN THE CONFIG FILE !!!");
-        process.exit(1);
-    }else if(config.Path_To_Game.indexOf("\\") !== -1){
+    if(config.Path_To_Game.indexOf("\\") !== -1){
         rootGameFolder = config.Path_To_Game.replace(new RegExp("\\\\", 'g'), "/").split("/");
     }else rootGameFolder = config.Path_To_Game.split("/");
 
-    if(config.Path_To_Controller === null || config.Path_To_Controller.trim() === ""){
-        console.log("!!! NO CONTROLLER PATH IS PROVIDED IN THE CONFIG FILE !!!");
-        process.exit(1);
-    }else if(config.Path_To_Controller.indexOf("\\") !== -1){
+    if(config.Path_To_Controller.indexOf("\\") !== -1){
         rootControllerFolder = config.Path_To_Controller.replace(new RegExp("\\\\", 'g'), "/").split("/");
     }else rootControllerFolder = config.Path_To_Controller.split("/");
 
