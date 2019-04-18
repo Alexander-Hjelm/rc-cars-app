@@ -1,6 +1,43 @@
 # Menu flow
 
-| Car/Color selection | -> |        Ready        |
+|    Main menu     | -> | Car/Color selection | -> |   Practice level   |-> |     Race level     |
+
+# Reconnect
+```
+{
+  'message': 'ReconnectData',
+  'data': {
+    'state-id' : <integer>,
+    'car-id' : <integer>,
+    'active-powerup-id' : <integer>,
+    'color-r' : <integer>,
+    'color-g' : <integer>,
+    'color-b' : <integer>
+  }
+}
+```
+
+
+# Data
+
+## State by id
+* **0**: No state
+* **1**: Loading
+* **2**: Menu navigation (only for host)
+* **3**: Wait for host (only for non-hosts)
+* **4**: Car/color selection
+* **5**: Practice mode
+* **6**: Racing mode
+
+## Powerups by id
+* **0**: None
+* **1**: Landmine
+* **2**: Bowling ball
+* **3**: Speed boost
+
+## Cars by id
+* **0**: None
+* **1**: Rebel
 
 # Menu functionality
 
