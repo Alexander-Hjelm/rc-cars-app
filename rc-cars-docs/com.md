@@ -236,6 +236,10 @@ The server will not respond.
 
 The server will not respond.
 
+### Buttons
+
+* **Ready/Unready**: Sends a "Ready" or an "Unready" message to the server.
+
 ## Racing mode (State 6)
 
 ### Server to Client messages
@@ -272,7 +276,3 @@ The player was defeated in this game, and will not come back in future rounds un
 ```
 
 The server will not respond.
-
-### Buttons
-
-* **Ready/Unready**: Sends a "Ready" or an "Unready" message to the server.
