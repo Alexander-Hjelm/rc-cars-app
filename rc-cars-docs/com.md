@@ -2,6 +2,55 @@
 
 |    Main menu     | -> | Car/Color selection | -> |   Practice level   |-> |     Race level     |
 
+
+# Server-issued messages (General)
+These messages may be issued by the server to a client at any time, regardless of state.
+## State change
+```
+{
+  'message': 'update-state',
+  'data': {
+    'state-id' : <integer>
+  }
+}
+```
+
+The client will not respond.
+
+## Ready query
+```
+{
+  'message': 'ready-query',
+  'data': {}
+}
+```
+
+The client will respond with the following message:
+```
+{
+  'message': 'ready',
+  'data': {}
+}
+```
+
+## State query
+```
+{
+  'message': 'state-query',
+  'data': {}
+}
+```
+
+The client will respond with the following message, where state-id is the state id of the currently loaded controller:
+```
+{
+  'message': 'state-response',
+  'data': {
+    'state-id' : <integer>
+  }
+}
+```
+
 # Reconnect
 ```
 {
@@ -16,7 +65,6 @@
   }
 }
 ```
-
 
 # Data
 
@@ -39,7 +87,7 @@
 * **0**: None
 * **1**: Rebel
 
-# Menu functionality
+# State-specific functionality
 
 ## Car/Color Selection menu
 
