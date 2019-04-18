@@ -212,6 +212,30 @@ The server will not respond.
 * **Left/Right**: Two arrow buttons that send Move messages to the server with value = 1 or value = -1.
 * **Ready/Unready**: Sends a "Ready" or an "Unready" message to the server.
 
+## Practice mode (State 5)
+
+### Client to Server messages
+
+#### Ready
+```
+{
+  'message': 'ready',
+  'data': {}
+}
+```
+
+The server will not respond.
+
+#### Unready
+```
+{
+  'message': 'unready',
+  'data': {}
+}
+```
+
+The server will not respond.
+
 ## Racing mode (State 6)
 
 ### Server to Client messages
@@ -252,27 +276,3 @@ The server will not respond.
 ### Buttons
 
 * **Ready/Unready**: Sends a "Ready" or an "Unready" message to the server.
-
-## Practice mode (State 5)
-
-### Client to Server messages
-
-#### Ready
-```
-{
-  'message': 'ready',
-  'data': {}
-}
-```
-
-The server will not respond.
-
-#### Unready
-```
-{
-  'message': 'unready',
-  'data': {}
-}
-```
-
-The server will not respond.
