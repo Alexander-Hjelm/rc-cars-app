@@ -1,6 +1,8 @@
 # Menu flow
 
 |    Main menu     | -> | Car/Color selection | -> |   Practice level   |-> |     Race level     |
+        ^                                                                             /
+         \___________________________________________________________________________/
 
 # Reconnect
 ```
