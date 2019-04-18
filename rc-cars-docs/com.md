@@ -212,6 +212,47 @@ The server will not respond.
 * **Left/Right**: Two arrow buttons that send Move messages to the server with value = 1 or value = -1.
 * **Ready/Unready**: Sends a "Ready" or an "Unready" message to the server.
 
+## Racing mode (State 6)
+
+### Server to Client messages
+
+#### Defeated, Round
+The player was defeated in this round, but will come back in the next round.
+```
+{
+  'message': 'defeated-round',
+  'data': {}
+}
+```
+
+The client will not respond
+
+#### Round restart
+The round is over and the next one begins now. This message will only be sent to players who are still alive.
+```
+{
+  'message': 'round-restart',
+  'data': {}
+}
+```
+
+The client will not respond
+
+#### Defeated, Game
+The player was defeated in this game, and will not come back in future rounds until the next game begins.
+```
+{
+  'message': 'defeated-game',
+  'data': {}
+}
+```
+
+The server will not respond.
+
+### Buttons
+
+* **Ready/Unready**: Sends a "Ready" or an "Unready" message to the server.
+
 ## Practice mode (State 5)
 
 ### Client to Server messages
@@ -235,7 +276,3 @@ The server will not respond.
 ```
 
 The server will not respond.
-
-### Buttons
-
-* **Ready/Unready**: Sends a "Ready" or an "Unready" message to the server.
