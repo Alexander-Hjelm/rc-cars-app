@@ -1,218 +1,287 @@
 var lastSentOrientation = 0;
-var screen = 0;
+var myColor = 'color-0';
+var myColorCode;
+var ready = false;
+var readyP = false;
+var dead = false;
 
-Tiltspot.onGameMsg = function (msg, data) {
-  switch (msg) { 
-    case 'color-reserved':
-      updateColor(msg, data);
-      break;
-    case 'color-unreserved':
-      updateColor(msg, data);
-      break;
-    case 'start': //timeout kan tas bort om loading ikke er ønskelig
-      updateScreen(0);
-      setTimeout(function () {
-        updateScreen(2);
-      }, 1000);
-      break;
-  }
+Tiltspot.on.ready = function() {};
+
+Tiltspot.on.msg = function(msg, data) {
+	switch (msg) {
+		case 'color-reserved':
+			updateColor(msg, data);
+			break;
+		case 'color-unreserved':
+			updateColor(msg, data);
+			break;
+		case 'ready-query':
+			Tiltspot.send.msg('ready');
+			break;
+		case 'ReconnectData':
+			var tempState = data['state-id']; //BYTTE
+			setVisibility(tempState);
+			if (tempState == 4) {
+				//set car, 'car-id' : <integer>,
+			} else if (tempState == 5 || tempState == 6) {
+				//set powerup, 'active-powerup-id' : <integer>,
+				setControllerColor('rgba(' + data['color-r'] + ', ' + data['color-g'] + ', ' + data['color-b'] + ', ');
+			}
+			//Set color 'color-r' : <integer>, 'color-g' : <integer>, 'color-b' : <integer></integer>
+			break;
+		case 'defeated-round':
+			dead = true;
+			document.getElementById('driving-defeated-round').style.display = flex;
+			break;
+		case 'round-restart':
+			dead = false;
+			document.getElementById('driving-defeated-round').style.display = none;
+			break;
+		case 'defeated-game':
+			document.getElementById('driving-defeated-game').style.display = flex;
+			break;
+		case 'state-id': //var update-state
+			setVisibility(data['state-id']); //BYTTE
+			break;
+		case 'state-query':
+			//response: state-response,  'data' : 'state-id' : <integer>
+			break;
+	}
+};
+
+function setVisibility(id) {
+	if (id == 1) {
+		document.getElementById('loading').style.display = 'flex';
+	} else {
+		document.getElementById('loading').style.display = 'none';
+	}
+	if (id == 2) {
+		document.getElementById('menu').style.display = 'flex';
+	} else {
+		document.getElementById('menu').style.display = 'none';
+	}
+	if (id == 3) {
+		document.getElementById('waiting').style.display = 'flex';
+	} else {
+		document.getElementById('waiting').style.display = 'none';
+	}
+	if (id == 4) {
+		document.getElementById('choosing').style.display = 'flex';
+	} else {
+		document.getElementById('choosing').style.display = 'none';
+	}
+	if (id == 5) {
+		document.getElementById('practice').style.display = 'flex';
+	} else {
+		document.getElementById('practice').style.display = 'none';
+	}
+	if (id == 6) {
+		dead = false;
+		document.getElementById('driving').style.display = 'flex';
+	} else {
+		document.getElementById('driving').style.display = 'none';
+	}
 }
+function updateColor(msg, data) {
+	var temp;
+	if (data.r == 255 && data.g == 0 && data.b == 0) {
+		temp = 'color-1';
+	} else if (data.r == 0 && data.g == 26 && data.b == 255) {
+		temp = 'color-2';
+	} else if (data.r == 255 && data.g == 224 && data.b == 0) {
+		temp = 'color-3';
+	} else if (data.r == 25 && data.g == 255 && data.b == 0) {
+		temp = 'color-4';
+	} else if (data.r == 255 && data.g == 0 && data.b == 239) {
+		temp = 'color-5';
+	} else if (data.r == 0 && data.g == 250 && data.b == 255) {
+		temp = 'color-6';
+	} else if (data.r == 255 && data.g == 123 && data.b == 0) {
+		temp = 'color-7';
+	} else if (data.r == 166 && data.g == 0 && data.b == 255) {
+		temp = 'color-8';
+	}
 
-function updateScreen(screenSwitch){
-  switch (screenSwitch) { 
-    case 0:
-      console.log("loading");
-      document.getElementById("drive").style.display = "none"; 
-      document.getElementById("color-pick").style.display = "none"; 
-      document.getElementById("loading").style.display = "flex";
-      break;
-    case 1:
-      console.log("color");
-      document.getElementById("drive").style.display = "none"; 
-      document.getElementById("loading").style.display = "none";
-      document.getElementById("color-pick").style.display = "flex"; 
-      break;
-    case 2:
-      console.log("drive");
-      document.getElementById("loading").style.display = "none";
-      document.getElementById("color-pick").style.display = "none"; 
-      document.getElementById("drive").style.display = "flex"; 
-      break;
-    case 3:
-      break;
-    case 4:
-      console.log("4");
-      document.getElementById("menu-open").style.display = "flex";
-      break;
-    case 5: 
-      console.log("5");
-      document.getElementById("menu-open").style.display = "none";
-      break;  
-    case 6:
-      var temp = document.getElementById("ready");
-      if(temp.innerHTML == "READY"){
-        Tiltspot.msgToGame('ready');
-        temp.style.backgroundColor = "crimson";
-        temp.innerHTML = "CANCEL";
-        updateOpacity("deactivate", "10%");
-      }else if (temp.innerHTML == "CANCEL"){
-        Tiltspot.msgToGame('unready');
-        temp.style.backgroundColor = "green";
-        temp.innerHTML = "READY";
-        updateOpacity("deactivate", "100%");
-      }else { //stupid fix for first click.. 
-        Tiltspot.msgToGame('ready');
-        temp.style.backgroundColor = "crimson";
-        temp.innerHTML = "CANCEL";
-        updateOpacity("deactivate", "10%");
-      }
-      break;
-    default:
-      console.log("none");
-  }
-}
-
-function updateOpacity(className, opacity){
-  var temp = document.getElementsByClassName(className);
-    for (i = 0; i < temp.length; i++) {
-      temp[i].style.filter = "opacity("+opacity+")";
-    }
-}
-
-function updateColor (msg, data){
-  var temp; 
-  if(data.r == 0 && data.g == 128 && data.b == 0){
-    temp = "color-green";
-  }else if(data.r == 128 && data.g == 0 && data.b == 128){
-    temp = "color-purple";
-  }else if(data.r == 255 && data.g == 0 && data.b == 0){
-    temp = "color-red";
-  }else if(data.r == 0 && data.g == 31 && data.b == 255){
-    temp = "color-blue";
-  }else if(data.r == 139 && data.g == 69 && data.b == 19){
-    temp = "color-brown";
-  }else if(data.r == 255 && data.g == 255 && data.b == 0){
-    temp = "color-yellow";
-  }else if(data.r == 0 && data.g == 255 && data.b == 255){
-    temp = "color-cyan";
-  }else if(data.r == 255 && data.g == 255 && data.b == 255){
-    temp = "color-white";
-  }
-
-  if(msg == 'color-reserved'){
-    document.getElementById(temp).classList.add("active");
-  }else if(msg == 'color-unreserved'){
-    document.getElementById(temp).classList.remove("active");
-  }
-}
-
-function moveFwd() {
-  Tiltspot.msgToGame("move", {v: 1.0});
-}
-
-function moveBwd() {
-  Tiltspot.msgToGame("move", {v: -1.0});
+	if (msg == 'color-reserved') {
+		if (myColor == temp) return;
+		document.getElementById(temp).style.filter = 'grayscale(0.9)';
+	} else if (msg == 'color-unreserved') {
+		document.getElementById(temp).style.filter = 'grayscale(0)';
+	}
 }
 
 function resetV() {
-  Tiltspot.msgToGame("move", {v: 0.0});
-}
-
-function fire() {
-  Tiltspot.msgToGame("fire", {});
+	Tiltspot.send.msg('move', { v: 0.0 });
 }
 
 function handleOrientationEvent(orientation) {
-  if(lastSentOrientation + 100 < new Date().getTime()){
-    lastSentOrientation = new Date().getTime();
-    var steer = ((orientation.accelerationIncludingGravity.y / 5)*0.5).toFixed(2);
-    
-    if (orientation.accelerationIncludingGravity.x < 0) {
-      steer *= -1;
-    }
+	if (lastSentOrientation + 100 < new Date().getTime() && !dead && (ready || readyP)) {
+		lastSentOrientation = new Date().getTime();
+		var steer = (orientation.accelerationIncludingGravity.y / 5 * 0.7).toFixed(2);
 
-    Tiltspot.msgToGame("move", {h: steer});
-    document.getElementById("deviceorientation").innerHTML = (steer);
+		if (orientation.accelerationIncludingGravity.x < 0) {
+			steer *= -1;
+		}
 
-    if(steer < 0) {
-      document.getElementById("tilt-right").style.backgroundColor = "#205a67";
-      document.getElementById("tilt-left").style.backgroundColor = "#138058a6";
-    }else if(steer > 0){
-      document.getElementById("tilt-right").style.backgroundColor = "#138058a6";
-      document.getElementById("tilt-left").style.backgroundColor = "#205a67";
-    }else {
-      document.getElementById("tilt-left").style.backgroundColor = "#205a67";
-      document.getElementById("tilt-right").style.backgroundColor = "#205a67";
-    }
-  }
+		Tiltspot.send.msg('move', { h: steer });
+
+		var tempSteer = steer * 10;
+		if (steer > 0.3) steer = 0.3;
+		else if (steer < -0.3) steer = -0.3;
+		document.getElementById('visual-col-2').style.transform = 'rotate(' + steer * 10 + 'deg)';
+		document.getElementById('visual-col-2').style.webkitTransform = 'rotate(' + steer * 10 + 'deg)';
+	}
+}
+
+function setControllerColor(color) {
+	document.documentElement.style.setProperty('--driving-color', color + '0.7)');
+	document.documentElement.style.setProperty('--driving-color-active', color + '1)');
 }
 
 window.onload = function() {
-  updateScreen(0);
-  setTimeout(function () {
-    updateScreen(1);
-  }, 2000);
-  
-  //Car
-  window.addEventListener("devicemotion", handleOrientationEvent, false);
-  document.getElementById("buttonFwd").addEventListener("touchstart", moveFwd, false);
-  document.getElementById("buttonFwd").addEventListener("touchend", resetV, false);
-  document.getElementById("buttonBwd").addEventListener("touchstart", moveBwd, false);
-  document.getElementById("buttonBwd").addEventListener("touchend", resetV, false);
-  document.getElementById("buttonFire").addEventListener("touchstart", fire, false);
-  
-  //Car and color meny
-  var colors = document.getElementsByClassName("colors")
-  for (i = 0; i < colors.length; i++) {
-    colors[i].addEventListener("click", function(e){
-      var temp = document.getElementById(e.target.id);
-      var temp2; 
-      switch(e.target.id){
-        case "color-green":
-          temp2 = {r: "0", g: "128", b: "0"}
-          break;
-        case "color-purple":
-          temp2 = {r: "128", g: "0", b: "128"}
-          break;
-        case "color-red":
-          temp2 = {r: "255", g: "0", b: "0"}
-          break;
-        case "color-blue":
-          temp2 = {r: "0", g: "31", b: "255"}
-          break;
-        case "color-brown":
-          temp2 = {r: "139", g: "69", b: "19"}
-          break;
-        case "color-yellow":
-          temp2 = {r: "255", g: "255", b: "0"}
-          break;
-        case "color-cyan":
-          temp2 = {r: "0", g: "255", b: "255"}
-          break;
-        case "color-white":
-          temp2 = {r: "255", g: "255", b: "255"}
-          break;
-        default:
-          console.log("none");
-      }
+	window.addEventListener('devicemotion', handleOrientationEvent, false);
 
-      if(temp.classList.contains("active")){
-        console.log("choosen allready");
-        //Tiltspot.msgToGame('color-unreserved', temp2);
-        //temp.classList.remove("active");
-      }else {
-        Tiltspot.msgToGame('color-selected', temp2);
-        temp.classList.add("active");
-      }
-    });
-  }
-  document.getElementById("left").addEventListener("click", function(){Tiltspot.msgToGame('move', {val: "left"})}, false); //Send move, data: value: "left"
-  document.getElementById("right").addEventListener("click", function(){Tiltspot.msgToGame('move', {val: "right"})}, false); //Send move, data: value: "right"
+	document.getElementById('driving-col-1').addEventListener('touchend', resetV, false);
+	document.getElementById('driving-col-2').addEventListener('touchend', resetV, false);
 
-  document.getElementById("ready").addEventListener("click", function(){updateScreen(6);}, false); 
+	document.getElementById('driving-col-1').addEventListener(
+		'touchstart',
+		function() {
+			Tiltspot.send.msg('move', { v: -1.0 });
+		},
+		false
+	);
+	document.getElementById('driving-col-2').addEventListener(
+		'touchstart',
+		function() {
+			Tiltspot.send.msg('move', { v: 1.0 });
+		},
+		false
+	);
 
-  //Menu
-  document.getElementById("menu").addEventListener("click", function(){updateScreen(1);}, false); //change to run just updateScreen with menu param. 
-  //document.getElementById("menu").addEventListener("click", function(){updateScreen(4);}, false); //change to run just updateScreen with menu param. 
-  document.getElementById("menu-close").addEventListener("click", function(){updateScreen(5);}, false)
-}
+	document.getElementById('driving-row-2').addEventListener(
+		'click',
+		function() {
+			Tiltspot.send.msg('fire', {});
+		},
+		false
+	);
+
+	document.getElementById('practice-ready').addEventListener(
+		'click',
+		function() {
+			if (readyP) {
+				Tiltspot.send.msg('unready', {});
+				readyP = false;
+				document.getElementById('practice-ready').style.color = 'gray';
+				document.getElementById('practice-ready').innerHTML = 'READY?';
+			} else {
+				Tiltspot.send.msg('ready', {});
+				readyP = true;
+				document.getElementById('practice-ready').style.color = 'green';
+				document.getElementById('practice-ready').innerHTML = 'READY';
+			}
+		},
+		false
+	);
+
+	document.getElementById('choosing-car-ready').addEventListener(
+		'click',
+		function() {
+			if (ready) {
+				document.getElementById('choosing-car-ready-text').innerHTML = 'READY?';
+				document.getElementById('choosing-car-ready-text').style.color = 'rgba(255, 255, 255, 0.7)';
+				document.getElementById('choosing-row-2').style.filter = 'opacity(1)';
+				document.getElementById('choosing-row-3').style.filter = 'opacity(1)';
+				ready = false;
+
+				Tiltspot.send.msg('unready');
+			} else {
+				document.getElementById('choosing-car-ready-text').innerHTML = 'READY';
+				document.getElementById('choosing-car-ready-text').style.color = 'green';
+				document.getElementById('choosing-row-2').style.filter = 'opacity(0.5)';
+				document.getElementById('choosing-row-3').style.filter = 'opacity(0.5)';
+				ready = true;
+
+				Tiltspot.send.msg('ready');
+			}
+		},
+		false
+	);
+
+	var colors = document.getElementsByClassName('choosing-colors');
+	for (i = 0; i < colors.length; i++) {
+		colors[i].addEventListener('click', function(e) {
+			document.getElementById('choosing-car-ready-text').style.display = 'flex';
+			var temp = document.getElementById(e.currentTarget.id);
+
+			if (document.getElementById(temp.id).style.filter == 'grayscale(0.9)' || ready) return;
+
+			if (myColor != 'color-0') {
+				document.getElementById('selected-' + myColor.split('-').pop()).style.display = 'none';
+				document.getElementById(myColor).getElementsByTagName('img')[0].className -= 'pulsate';
+			}
+
+			if (myColorCode) Tiltspot.send.msg('color-unreserved', myColorCode);
+
+			switch (e.currentTarget.id) {
+				case 'color-1':
+					myColorCode = { r: '255', g: '0', b: '0' };
+					setControllerColor('rgba(255, 0, 0, ');
+					document.getElementById('selected-1').style.display = 'flex';
+					changeColor(0xff0000);
+					break;
+				case 'color-2':
+					myColorCode = { r: '0', g: '26', b: '255' };
+					setControllerColor('rgba(0, 26, 255, ');
+					document.getElementById('selected-2').style.display = 'flex';
+					changeColor(0x001aff);
+					break;
+				case 'color-3':
+					myColorCode = { r: '255', g: '224', b: '0' };
+					setControllerColor('rgba(255, 224, 0, ');
+					document.getElementById('selected-3').style.display = 'flex';
+					changeColor(0xffe000);
+					break;
+				case 'color-4':
+					myColorCode = { r: '25', g: '255', b: '0' };
+					setControllerColor('rgba(25, 255, 0, ');
+					document.getElementById('selected-4').style.display = 'flex';
+					changeColor(0x19ff00);
+					break;
+				case 'color-5':
+					myColorCode = { r: '255', g: '0', b: '239' };
+					setControllerColor('rgba(255, 0, 239, ');
+					document.getElementById('selected-5').style.display = 'flex';
+					changeColor(0xff00ef);
+					break;
+				case 'color-6':
+					myColorCode = { r: '0', g: '250', b: '255' };
+					setControllerColor('rgba(0, 250, 255, ');
+					document.getElementById('selected-6').style.display = 'flex';
+					changeColor(0x00faff);
+					break;
+				case 'color-7':
+					myColorCode = { r: '255', g: '123', b: '0' };
+					setControllerColor('rgba(255, 123, 0, ');
+					document.getElementById('selected-7').style.display = 'flex';
+					changeColor(0xff7b00);
+					break;
+				case 'color-8':
+					myColorCode = { r: '166', g: '0', b: '255' };
+					setControllerColor('rgba(166, 0, 255, ');
+					document.getElementById('selected-8').style.display = 'flex';
+					changeColor(0xa600ff);
+					break;
+				default:
+					console.log('none');
+			}
+
+			myColor = temp.id;
+
+			document.getElementById(myColor).getElementsByTagName('img')[0].className += 'pulsate';
+			document.getElementById('selected-' + myColor.split('-').pop()).style.display = 'flex';
+			Tiltspot.send.msg('color-selected', myColorCode);
+		});
+	}
+};

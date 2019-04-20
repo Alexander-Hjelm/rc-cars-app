@@ -2,81 +2,178 @@
 <html>
 	<head>
 		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height">
-
 		<link rel="stylesheet" href="styles.css">
-		<script src='https://tiltspot.tv/api/javascript/controllerAPIs/js-controller-1.0.0.js' rel='script' type='application/javascript'></script>
-		<script src ='script.js'></script>
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src='https://tiltspot.tv/api/controller/controller-1.0.0.js' rel='script' type='application/javascript'></script>
+		<script src="js/three.js" defer></script>
+		<script src="js/STLLoader.js" defer></script>
+		<script src ='models.js' defer></script>
+		<script src ='script.js' defer></script>
 	</head>
 	<body class="noselect">
-		<div class="flex-container" id="drive">
-			<div class="flex-row driving-row" id="tilt-guide">
-				<div class="flex-col driving-col" id="tilt-left">
-					<img class="noselect" src="imgs/tilt-left.png">
+			<div class="flex-container" id="waiting">
+					<div class="load-5">
+						<div class="ring-2">
+							<div class="car-holder">
+								<img src="/images/car-loading.png">
+							</div>
+						</div>
+					</div>
+					<h3 id="loading-text">WAIT FOR HOST</h3>
 				</div>
-				<div class="flex-col driving-col">
-					<p><b>TILT TO STEER</b></p>
-				</div>
-				<div class="flex-col driving-col" id="tilt-right">
-					<img class="noselect" src="imgs/tilt-right.png">
-				</div>
-			</div>
-			<div class="flex-row driving-row">
-				<div class="flex-col driving-col">
-					<div class="noselect" id="buttonFire"><img class="noselect" src="imgs/power-up.png"></div>
-					<div class="noselect" id="buttonBwd"><img class="noselect" src="imgs/reverse.png"></div>
-				</div>
-				<div class="flex-col-start noselect">
-					<p class="noselect" id="menu">Menu</p>
-					<p class="noselect" id="deviceorientation-text">Tilt</p>
-					<p class="noselect" id="deviceorientation"></p>
-				</div>
-				<div class="flex-col driving-col">
-					<div class="noselect" id="buttonFwd"><img class="noselect" src="imgs/gas.png"></div>
-				</div>
-			</div>
-		</div>
-
 		<div class="flex-container" id="loading">
-			<p>loading..</p>
+			<div class="load-5">
+				<div class="ring-2">
+					<div class="car-holder">
+						<img src="/images/car-loading.png">
+					</div>
+				</div>
+			</div>
+			<h3 id="loading-text">LOADING</h3>
 		</div>
+		<div class="flex-container" id="driving">
+			<div id="driving-defeated-round">
+				<h1>You lost the round!</h1>
+			</div>
+			<div id="driving-defeated-game">
+				<h1>Your out!!</h1>
+			</div>
+			<div class="flex-row" id="row-1">
+				<div class="flex-item" id="visual-col-1">
+					<img src="images/tilt-left.svg">
+				</div> 
+				<div class="flex-item" id="visual-col-2">
+					<img src="images/visual-line.svg">
+				</div> 
+				<div class="flex-item" id="visual-col-3">
+					<img src="images/tilt-right.svg">
+				</div> 
 
-		<div class="flex-container" id="color-pick">
-				<p id="color-pick-header"><b>PICK YOUR CAR AND COLOR:</b></p>
-				<div class="flex-row deactivate">
-					<div class="flex-col" id="left">
-						<img class="noselect car" src="imgs/left.png">
-					</div>
-					<div class="flex-col">
-						<p id="color-text">switch car</p>
-					</div>
-					<div class="flex-col" id="right">
-						<img class="noselect car" src="imgs/right.png">
-					</div>
+			</div>
+			<div class="flex-row" id="driving-row-2">
+				<div class="flex-item" id="driving-perk-text">
+					<h2>POWER UP</h2>		
+				</div> 
+				<div class="flex-item" id="driving-perk-icon">
+					<img src="images/icon-perk.svg">
+				</div> 
+				<div class="flex-item" id="driving-perk-empty"></div> 
+			</div>
+			<div class="flex-row" id="driving-row-3">
+				<div class="flex-col" id="driving-col-1">
+					<div class="flex-item driving-drive-icon"><img src="images/icon-break.svg"></div>
+					<div class="flex-item driving-drive-text"><h2>BREAK</h2></div>
 				</div>
-				<div class="flex-row deactivate">
-					<div class="flex-col colors" id="color-red"></div>
-					<div class="flex-col colors" id="color-blue"></div>
-					<div class="flex-col colors" id="color-green"></div>
+				<div class="flex-col" id="driving-col-2">
+					<div class="flex-item driving-drive-icon"><img src="images/icon-forward.svg"></div>
+					<div class="flex-item driving-drive-text"><h2>FORWARD</h2></div>
 				</div>
-				<div class="flex-row deactivate">
-					<div class="flex-col colors" id="color-brown"></div>
-					<div class="flex-col colors" id="color-purple"></div>
-				</div>
-				<div class="flex-row deactivate">
-					<div class="flex-col colors" id="color-yellow"></div>
-					<div class="flex-col colors" id="color-cyan"></div>
-					<div class="flex-col colors" id="color-white"></div>
-				</div>
-				<div class="flex-row">
-					<div class="flex-col" id="ready">
-						READY
-					</div>
-				</div>
+			</div>
 		</div>
-
-		<div class="flex-container" id="menu-open">
-			<p id="menu-close">close</p>
+		<div class="flex-container" id="practice">
+				<h1 id="practice-ready">READY?</h1>
+				<h2>PRACTICE, COMING SOON</h2>
+			</div>
+		<div class="flex-container" id="choosing">
+			<div class="flex-row" id="row-1">
+				<div class="flex-item" id="visual-col-1">
+				</div> 
+				<div class="flex-item" id="visual-col-2">
+					<img src="images/visual-line.svg">
+				</div> 
+				<div class="flex-item" id="visual-col-3">
+				</div>
+			</div>
+			<div class="flex-col" id="choosing-row-2">
+				<div class="flex-row colors">
+					<div class="flex-col choosing-colors" id="color-1">
+						<img src="images/color-red.svg">
+						<img class="choosing-selected" id="selected-1" src="images/icon-selected.svg">
+					</div>
+					<div class="flex-col choosing-colors" id="color-2">
+						<img src="images/color-blue.svg">
+						<img class="choosing-selected" id="selected-2" src="images/icon-selected.svg">
+					</div>
+					<div class="flex-col choosing-colors" id="color-3">
+						<img src="images/color-yellow.svg">
+						<img class="choosing-selected" id="selected-3" src="images/icon-selected.svg">
+					</div>
+					<div class="flex-col choosing-colors" id="color-4">
+						<img src="images/color-green.svg">
+						<img class="choosing-selected" id="selected-4" src="images/icon-selected.svg">
+					</div>
+					<div class="flex-col choosing-colors" id="color-5">
+						<img src="images/color-pink.svg">
+						<img class="choosing-selected" id="selected-5" src="images/icon-selected.svg">
+					</div>
+					<div class="flex-col choosing-colors" id="color-6">
+						<img src="images/color-turquoise.svg">
+						<img class="choosing-selected" id="selected-6" src="images/icon-selected.svg">
+					</div>
+					<div class="flex-col choosing-colors" id="color-7">
+						<img src="images/color-orange.svg">
+						<img class="choosing-selected" id="selected-7" src="images/icon-selected.svg">
+					</div>
+					<div class="flex-col choosing-colors" id="color-8">
+						<img src="images/color-purple.svg">
+						<img class="choosing-selected" id="selected-8" src="images/icon-selected.svg">
+					</div>
+				</div>
+				<div class="flex-row" id="choosing-color-text">
+					<h3>COLOR</h3>
+				</div>
+			</div>
+			<div class="flex-col" id="choosing-row-3">
+				<div class="flex-row" id="choosing-car-text">
+					<h3>CAR</h3>
+					<h1 id="choosing-car-text-h1">CHANGE?</h1>
+				</div>
+				<div class="flex-row" id="choosing-car-model">
+					<div class="flex-row"><!--<img id="choosing-car-model-icon-1" src="/images/icon-left.svg">--></div>						
+					<div class="flex-row" id="choosing-car-model-car"><div id="model"></div></div>
+					<div class="flex-row"><!--<img id="choosing-car-model-icon-2" src="/images/icon-right.svg">--></div>
+				</div>
+				<div class="flex-row" id="choosing-car-ready">
+					<div class="flex-item">
+						<h3><span id="choosing-car-ready-text">READY?</span></h3>
+					</div>
+				</div>
+			</div>
 		</div>
-
+		<div class="flex-container" id="menu">
+			<div class="flex-row" id="row-1">
+				<div class="flex-item" id="visual-col-1">
+				</div> 
+				<div class="flex-item" id="visual-col-2">
+					<img src="images/visual-line.svg">
+				</div> 
+				<div class="flex-item" id="visual-col-3">
+				</div>
+			</div>
+			<div class="flex-col" id="menu-row-2">
+				<div class="flex-row" id="menu-settings"><h1>MENU NAVIGATION</h1></div>
+			</div>
+			<div class="flex-row" id="menu-nav">
+				<div class="flex-col menu-nav-btn">
+					<i class="material-icons">arrow_left</i>
+					<p>Left</p>
+				</div>
+				<div class="flex-col">
+					<div class="menu-nav-btn" id="btn-acc">
+						<i class="material-icons">check</i>
+						<p>Accept</p>
+					</div>
+					<div class="menu-nav-btn" id="btn-bac">
+						<i class="material-icons">arrow_back</i>
+						<p>Back</p>
+					</div>
+				</div>
+				<div class="flex-col menu-nav-btn">
+					<i class="material-icons">arrow_right</i>
+					<p>Right</p>
+				</div>
+			</div>
+		</div>
 	</body>
 </html>
