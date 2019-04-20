@@ -1,244 +1,468 @@
-html, body {
-    height: 100%;
-    width: 100%;
-    padding: 0;
-    margin: 0;
-    font-family: 'Bungee Inline', cursive;
+html,
+body {
+	height: 100%;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+:root {
+	--driving-color: rgba(255, 4, 0, 0.7);
+	--driving-color-active: rgba(255, 4, 0, 1);
+}
+
+@font-face {
+	font-family: Silom;
+	src: url(font/Silom.ttf);
+}
+
+h1 {
+	font-family: 'Silom';
+	color: rgba(62, 62, 62, 0.5);
+	font-size: 50pt;
+}
+
+h2 {
+	font-family: 'Silom';
+	color: rgba(62, 62, 62, 0.5);
+	font-size: 25pt;
+}
+
+h3 {
+	font-family: 'Silom';
+	color: rgba(180, 180, 180, 0.5);
+	font-size: 10pt;
 }
 
 .noselect {
-    -webkit-touch-callout: none; /* iOS Safari */
-      -webkit-user-select: none; /* Safari */
-       -khtml-user-select: none; /* Konqueror HTML */
-         -moz-user-select: none; /* Firefox */
-          -ms-user-select: none; /* Internet Explorer/Edge */
-              user-select: none; /* Non-prefixed version, currently
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	-khtml-user-select: none; /* Konqueror HTML */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none; /* Non-prefixed version, currently
                                     supported by Chrome and Opera */
-  }
-  
-.flex-container {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;   
-    background-color: rgb(29, 41, 73);  
-}
-
-.flex-row {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;   
-    
-}
-
-.driving-row {
-    background-color: rgb(40, 58, 62);  
-}
-
-.flex-col {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;   
-}
-
-.driving-col {
-    box-shadow: 3px 3px 3px rgba(73, 86, 95, 0.33);
-}
-
-.flex-col-start {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;   
-    box-shadow: 3px 3px 3px rgba(73, 86, 95, 0.33);
-}
-
-.flex-col img {
-    pointer-events: none;
-}
-
-#hl {
-    height: 2px;
-    background-color: white;
-    width: 90%;
-}
-
-#tilt-guide {
-    height: 15%;
-    background-color: #205a67;
-    font-size: large;
-    color: whitesmoke;
-    text-align: center;
-    font-family: 'Courier New', Courier, monospace;
-}
-
-#tilt-guide .flex-col {
-    box-shadow: none;
-}
-
-#tilt-guide img {
-    height: 50%;
-}
-
-#deviceorientation {
-    color: gray;
-    font-size: larger;
-    font-family: 'Courier New', Courier, monospace;
-}
-
-#deviceorientation-text {
-    color: gray;
-    font-size: larger;
-    font-family: 'Courier New', Courier, monospace;
-}
-
-#buttonFwd, #buttonBwd, #buttonFire {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    width: 100%;
-    height: 100%;
-    box-shadow: 3px 3px 3px rgba(73, 86, 95, 0.33);
-    
-}
-
-#buttonFwd:active, #buttonBwd:active, #buttonFire:active, #menu:active {
-    background-color: rgb(65, 71, 88)
-}
-
-#buttonFire img {
-    width: 30%;
-}
-
-#buttonBwd img, #buttonFwd img {
-    width: 27%;
-}
-
-#menu {
-    height: 100px;
-    width: 100%;
-    background-color: #2a2a2973;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    margin: 0;
-    box-shadow: 3px 3px 3px rgba(46, 49, 51, 0.8);
-    line-height: 100px;
-    color: white;
-}
-
-#menu-open {
-    display: none;
-    height: calc(100% - 80px);
-    width: calc(100% - 80px);
-    position: absolute;
-    margin: 40px;
-    top: 0;
-    left: 0;
-    background-color: #000000a8;
-}
-
-#menu-close {
-    color: white;
-}
-
-#loading {
-    display: none;
-    color: white;
-}
-
-#color-pick {
-    display: none;
-}
-
-#drive {
-    display: none;
-}
-
-.car {
-    width: 20%;
-}
-
-#color-pick-header {
-    font-family: 'Courier New', Courier, monospace;
-    color: white;
-}
-
-#ready {
-    width: 25%;
-    height: 60%;
-    margin-bottom: 10px;
-    background-color: green;
-}
-
-#left:active, #right:active {
-    filter: opacity(20%);
 }
 
 /****
-Colors! 
-*/
+*
+*	General
+*
+*****/
 
-#color-text {
-    color: white;
-}
-
-.colors {
-    width: 20%;
-    height: 40%;
-    margin: 20px;
-    box-shadow: inset 0 0 0px 3px #b3b3b382;
-    -moz-box-shadow: inset 0 0 0px 3px #b3b3b382;
-    -webkit-box-shadow: inset 0 0 0px 3px #b3b3b382;
-}
-					    
-#color-green{
-    background-color: rgb(0, 128, 0);
+.flex-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
-#color-purple{
-    background-color: rgb(128, 0, 128);
+.flex-row {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 }
 
-#color-red{
-    background-color: rgb(255, 0, 0);
-}
-						      
-#color-blue{
-    background-color: rgb(0, 31, 255);
-}
-								
-#color-brown{
-    background-color: rgb(139, 69, 19);
+.flex-col {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
 }
 
-#color-yellow{
-    background-color: rgb(255, 255, 0);
-}
-						           
-#color-cyan{
-    background-color: rgb(0, 255, 255);
-}
-								
-#color-white{
-    background-color: rgb(255, 255, 255);
-}	
-
-#color-green:active, #color-purple:active, #color-red:active, #color-blue:active, #color-brown:active, #color-yellow:active, #color-cyan:active, #color-white:active {
-    filter: opacity(30%);
+.flex-item {
+	height: 100%;
+	width: 100%;
+	display: flex;
 }
 
-.active {
-    filter: opacity(50%);
+#row-1 {
+	flex: 0 0 calc(10% - 5px);
+	margin-bottom: 5px;
+}
+
+#visual-col-1,
+#visual-col-3 {
+	flex-basis: 20%;
+	justify-content: center;
+	align-content: center;
+}
+
+#visual-col-2 img {
+	width: 100%;
+}
+
+#visual-col-1 img,
+#visual-col-3 img {
+	width: 40%;
+}
+
+/*******/
+#model {
+	width: 50%;
+	position: absolute;
+}
+
+#model canvas {
+	width: 266px !important;
+	height: 148px !important;
+}
+/****
+*
+*	Driving window in the game! 
+*
+*****/
+
+#practice {
+	display: none;
+	height: calc(100% - 10px);
+	width: calc(100% - 10px);
+	padding: 5px;
+	background-color: #444444;
+}
+
+#practice-ready {
+	color: gray;
+}
+
+#driving {
+	display: none;
+	height: calc(100% - 10px);
+	width: calc(100% - 10px);
+	padding: 5px;
+	background-color: #444444;
+}
+
+#driving-defeated-round {
+	display: none;
+	height: 100%;
+	width: 100%;
+	background-color: #ff2828;
+	position: absolute;
+	z-index: 1;
+}
+
+#driving-defeated-game {
+	display: none;
+	height: 100%;
+	width: 100%;
+	background-color: #ff2828;
+	position: absolute;
+	z-index: 1;
+}
+
+#driving-row-2 {
+	flex: 0 0 calc(30% - 5px);
+	background-color: var(--driving-color);
+	margin-bottom: 5px;
+	border-radius: 5px;
+}
+
+#driving-row-2:active {
+	background-color: var(--driving-color-active);
+}
+
+#driving-row-3 {
+	flex: 0 0 calc(60% - 5px);
+}
+
+#driving-col-1 {
+	background-color: var(--driving-color);
+	border-radius: 10px;
+	margin-right: 2.5px;
+}
+
+#driving-col-2 {
+	background-color: var(--driving-color);
+	border-radius: 10px;
+	margin-left: 2.5px;
+}
+
+#driving-col-1:active,
+#driving-col-2:active {
+	background-color: var(--driving-color-active);
+}
+
+#driving-perk-text,
+#driving-perk-empty {
+	flex-basis: 40%;
+	justify-content: center;
+	align-content: center;
+}
+
+#driving-perk-icon {
+	height: 45%;
+	flex-basis: 20%;
+	justify-content: center;
+	align-content: center;
+}
+
+.driving-drive-icon {
+	flex: 0 0 75%;
+	justify-content: center;
+	align-content: center;
+}
+
+.driving-drive-icon img {
+	width: 20%;
+}
+
+.driving-drive-text {
+	flex: 0 0 25%;
+	justify-content: center;
+	align-content: center;
+}
+
+.driving-drive-text h2 {
+	margin: 0;
+}
+
+/****
+*
+*	Loading and waiting
+*
+*****/
+
+#waiting {
+	display: none;
+	height: 100%;
+	width: 100%;
+	background-color: #444444;
+}
+
+#loading {
+	display: none;
+	height: 100%;
+	width: 100%;
+	background-color: #444444;
+}
+
+#loading-text {
+	color: #b3bbbb;
+	animation: pulse 1.5s alternate infinite ease-in;
+	padding-top: 10px;
+}
+
+.car-holder {
+	position: absolute;
+	width: 12px;
+	height: 180px;
+	top: 150px;
+}
+
+.car-holder img {
+	width: 20px;
+}
+
+.load-5 .car-holder {
+	animation: loadingE 5s linear infinite;
+}
+
+@keyframes loadingE {
+	0% {
+		transform: rotate(0deg);
+		-webkit-transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+		-webkit-transform: rotate(360deg);
+	}
+}
+
+/****
+*
+*	Car selection before the driving starts! 
+*
+*****/
+
+#choosing {
+	height: calc(100% - 10px);
+	width: calc(100% - 10px);
+	padding: 5px;
+	background-color: #444444;
+}
+
+#choosing-row-2 {
+	flex: 0 0 calc(30% - 5px);
+	background-color: rgba(0, 0, 0, 0.45);
+	margin-bottom: 5px;
+	border-radius: 5px;
+}
+
+#choosing-row-3 {
+	flex: 0 0 calc(60% - 5px);
+	background-color: rgba(0, 0, 0, 0.45);
+	border-radius: 5px;
+}
+
+#choosing-color-text {
+	flex: 0 0 10%;
+	justify-content: left;
+	align-content: flex-start;
+}
+
+#choosing-color-text h3 {
+	margin: 0;
+	padding-left: 5px;
+	padding-bottom: 5px;
+}
+
+.choosing-colors {
+	position: relative;
+}
+
+.choosing-colors img {
+	width: 50%;
+}
+
+.pulsate {
+	animation: pulse 1.5s alternate infinite ease-in;
+}
+
+@keyframes pulse {
+	0% {
+		transform: scale(1);
+		-webkit-transform: scale(1);
+	}
+	100% {
+		transform: scale(1.1);
+		-webkit-transform: scale(1.1);
+	}
+}
+
+.choosing-selected {
+	display: none;
+	width: 20%;
+	position: absolute;
+	bottom: 12px;
+	right: 17px;
+}
+
+.choosing-selected {
+	width: 20% !important;
+}
+
+#choosing-car-text {
+	position: relative;
+	flex: 0 0 10%;
+	justify-content: left;
+	align-content: flex-start;
+}
+
+#choosing-car-text h3 {
+	margin: 0;
+	padding-left: 5px;
+	padding-top: 5px;
+}
+
+#choosing-car-text-h1 {
+	position: absolute;
+	left: 0;
+	right: 0;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#choosing-car-model {
+	flex: 0 0 70%;
+}
+
+#choosing-car-model-car img {
+	position: relative;
+	width: 60%;
+}
+
+#choosing-car-model-icon-1,
+#choosing-car-model-icon-2 {
+	height: 30%;
+}
+
+#choosing-car-model-icon-1:active,
+#choosing-car-model-icon-2:active {
+	opacity: 0.40;
+}
+
+#choosing-car-ready {
+	flex: 0 0 20%;
+}
+
+#choosing-car-ready-text {
+	display: none;
+	color: #ffffffb3;
+	font-size: 18pt;
+}
+
+#choosing-car-ready img {
+	height: 60%;
+}
+
+#choosing-car-ready h3 {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/****
+*
+*	Menu
+*
+*****/
+
+#menu {
+	display: none;
+	height: calc(100% - 10px);
+	width: calc(100% - 10px);
+	padding: 5px;
+	background-color: #444444;
+}
+
+#menu-row-2 {
+	flex: 0 0 calc(20% - 5px);
+	background-color: rgba(255, 255, 255, 0.45);
+	margin-bottom: 5px;
+	border-radius: 5px;
+}
+
+#menu-row-3 {
+	flex: 0 0 calc(70% - 5px);
+	background-color: rgba(0, 0, 0, 0.45);
+	border-radius: 5px;
+}
+
+#menu-settings h1 {
+	font-size: 30pt;
+}
+
+#menu-nav {
+	color: white;
+	margin-top: 5px;
+}
+
+.menu-nav-btn {
+	color: white;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.45);
+	margin: 10px;
+	border-radius: 5px;
+}
+
+#btn-acc {
+	margin: 0;
+	margin-bottom: 10px;
+}
+
+#btn-bac {
+	margin: 0;
+}
+
+#menu-nav i {
+	font-size: 60px;
 }
