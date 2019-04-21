@@ -206,6 +206,22 @@ The server will not respond.
 
 The server will not respond.
 
+### Server to Client messages
+
+#### Set color
+```
+{
+  'message': 'set-color',
+  'data': {
+    'r' : <integer>,
+    'g' : <integer>,
+    'b' : <integer>
+  }
+}
+```
+
+The client will not respond. The client will proceed by setting the color of the car accordiingly.
+
 ### Buttons
 
 * **Color selection**: A list of buttons that each send a "Color Selected" message to the server.
