@@ -13,7 +13,7 @@ body {
 
 @font-face {
 	font-family: Silom;
-	src: url(font/Silom.ttf);
+	src: url(../assets/font/Silom.ttf);
 }
 
 h1 {
@@ -127,8 +127,21 @@ h3 {
 	background-color: #444444;
 }
 
+#practice-row-2 {
+	margin-bottom: 5px;
+	border-radius: 5px;
+	padding: 5px;
+}
+
 #practice-ready {
-	color: gray;
+	justify-content: center;
+	align-items: center;
+	border-radius: 5px;
+	background-color: var(--driving-color-active);
+}
+
+#practice-ready-text {
+	color: white;
 }
 
 #driving {
