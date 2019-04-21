@@ -186,7 +186,7 @@ function compressFiles(callback) {
                 break;
             case "html":
                 log("% Compressing file: "+path);
-                executeCommand('html-minifier --collaps e-whitespace --remove-comments --remove-optional-tags --remove-redundant-attributes --remove-s cript-type-attributes --use-short-doctype --minify-css true --minify-js true -o "'+path+'" "'+path+'"', callback);
+                executeCommand('html-minifier --collaps e-whitespace --remove-comments --remove-optional-tags --remove-redundant-attributes --use-short-doctype --minify-css true --minify-js true -o "'+path+'" "'+path+'"', callback);
                 break;
             default:
                 callback();
