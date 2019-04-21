@@ -5,18 +5,20 @@
 		<link rel="stylesheet" href="styles.css">
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<script src='https://tiltspot.tv/api/controller/controller-1.0.0.js' rel='script' type='application/javascript'></script>
-		<script src="js/three.js" defer></script>
-		<script src="js/STLLoader.js" defer></script>
-		<script src ='models.js' defer></script>
-		<script src ='script.js' defer></script>
+	
+		<script src='https://tiltspot.tv/api/controller/controller-1.0.0.js' rel='script' type='application/javascript' defer></script>
+		<script src="/js/three.js" defer></script>
+		<script src="/js/STLLoader.js" defer></script>
+		<script src ='/models.js' defer></script>
+		<script src ='/script.js' defer></script>
+		
 	</head>
 	<body class="noselect">
 			<div class="flex-container" id="waiting">
 					<div class="load-5">
 						<div class="ring-2">
 							<div class="car-holder">
-								<img src="/images/car-loading.png">
+								<img src="../assets/images/car-loading.png">
 							</div>
 						</div>
 					</div>
@@ -26,7 +28,7 @@
 			<div class="load-5">
 				<div class="ring-2">
 					<div class="car-holder">
-						<img src="/images/car-loading.png">
+						<img src="../assets//images/car-loading.png">
 					</div>
 				</div>
 			</div>
@@ -41,13 +43,13 @@
 			</div>
 			<div class="flex-row" id="row-1">
 				<div class="flex-item" id="visual-col-1">
-					<img src="images/tilt-left.svg">
+					<img src="../assets/images/tilt-left.svg">
 				</div> 
 				<div class="flex-item" id="visual-col-2">
-					<img src="images/visual-line.svg">
+					<img src="../assets/images/visual-line.svg">
 				</div> 
 				<div class="flex-item" id="visual-col-3">
-					<img src="images/tilt-right.svg">
+					<img src="../assets/images/tilt-right.svg">
 				</div> 
 
 			</div>
@@ -56,31 +58,56 @@
 					<h2>POWER UP</h2>		
 				</div> 
 				<div class="flex-item" id="driving-perk-icon">
-					<img src="images/icon-perk.svg">
+					<img src="../assets/images/icon-perk.svg">
 				</div> 
 				<div class="flex-item" id="driving-perk-empty"></div> 
 			</div>
 			<div class="flex-row" id="driving-row-3">
 				<div class="flex-col" id="driving-col-1">
-					<div class="flex-item driving-drive-icon"><img src="images/icon-break.svg"></div>
+					<div class="flex-item driving-drive-icon"><img src="../assets/images/icon-break.svg"></div>
 					<div class="flex-item driving-drive-text"><h2>BREAK</h2></div>
 				</div>
 				<div class="flex-col" id="driving-col-2">
-					<div class="flex-item driving-drive-icon"><img src="images/icon-forward.svg"></div>
+					<div class="flex-item driving-drive-icon"><img src="../assets/images/icon-forward.svg"></div>
 					<div class="flex-item driving-drive-text"><h2>FORWARD</h2></div>
 				</div>
 			</div>
 		</div>
 		<div class="flex-container" id="practice">
-				<h1 id="practice-ready">READY?</h1>
-				<h2>PRACTICE, COMING SOON</h2>
+				<div class="flex-row" id="row-1">
+					<div class="flex-item" id="visual-col-1">
+						<img src="../assets/images/tilt-left.svg">
+					</div> 
+					<div class="flex-item" id="visual-col-2">
+						<img src="../assets/images/visual-line.svg">
+					</div> 
+					<div class="flex-item" id="visual-col-3">
+						<img src="../assets/images/tilt-right.svg">
+					</div> 
+	
+				</div>
+				<div class="flex-row" id="practice-row-2">
+					<div class="flex-item" id="practice-ready">
+						<h2 id="practice-ready-text">READY?</h2>		
+					</div> 
+				</div>
+				<div class="flex-row" id="driving-row-3">
+					<div class="flex-col" id="driving-col-1">
+						<div class="flex-item driving-drive-icon"><img src="../assets/images/icon-break.svg"></div>
+						<div class="flex-item driving-drive-text"><h2>BREAK</h2></div>
+					</div>
+					<div class="flex-col" id="driving-col-2">
+						<div class="flex-item driving-drive-icon"><img src="../assets/images/icon-forward.svg"></div>
+						<div class="flex-item driving-drive-text"><h2>FORWARD</h2></div>
+					</div>
+				</div>
 			</div>
 		<div class="flex-container" id="choosing">
 			<div class="flex-row" id="row-1">
 				<div class="flex-item" id="visual-col-1">
 				</div> 
 				<div class="flex-item" id="visual-col-2">
-					<img src="images/visual-line.svg">
+					<img src="../assets/images/visual-line.svg">
 				</div> 
 				<div class="flex-item" id="visual-col-3">
 				</div>
@@ -88,36 +115,36 @@
 			<div class="flex-col" id="choosing-row-2">
 				<div class="flex-row colors">
 					<div class="flex-col choosing-colors" id="color-1">
-						<img src="images/color-red.svg">
-						<img class="choosing-selected" id="selected-1" src="images/icon-selected.svg">
+						<img src="../assets/images/color-red.svg">
+						<img class="choosing-selected" id="selected-1" src="../assets/images/icon-selected.svg">
 					</div>
 					<div class="flex-col choosing-colors" id="color-2">
-						<img src="images/color-blue.svg">
-						<img class="choosing-selected" id="selected-2" src="images/icon-selected.svg">
+						<img src="../assets/images/color-blue.svg">
+						<img class="choosing-selected" id="selected-2" src="../assets/images/icon-selected.svg">
 					</div>
 					<div class="flex-col choosing-colors" id="color-3">
-						<img src="images/color-yellow.svg">
-						<img class="choosing-selected" id="selected-3" src="images/icon-selected.svg">
+						<img src="../assets/images/color-yellow.svg">
+						<img class="choosing-selected" id="selected-3" src="../assets/images/icon-selected.svg">
 					</div>
 					<div class="flex-col choosing-colors" id="color-4">
-						<img src="images/color-green.svg">
-						<img class="choosing-selected" id="selected-4" src="images/icon-selected.svg">
+						<img src="../assets/images/color-green.svg">
+						<img class="choosing-selected" id="selected-4" src="../assets/images/icon-selected.svg">
 					</div>
 					<div class="flex-col choosing-colors" id="color-5">
-						<img src="images/color-pink.svg">
-						<img class="choosing-selected" id="selected-5" src="images/icon-selected.svg">
+						<img src="../assets/images/color-pink.svg">
+						<img class="choosing-selected" id="selected-5" src="../assets/images/icon-selected.svg">
 					</div>
 					<div class="flex-col choosing-colors" id="color-6">
-						<img src="images/color-turquoise.svg">
-						<img class="choosing-selected" id="selected-6" src="images/icon-selected.svg">
+						<img src="../assets/images/color-turquoise.svg">
+						<img class="choosing-selected" id="selected-6" src="../assets/images/icon-selected.svg">
 					</div>
 					<div class="flex-col choosing-colors" id="color-7">
-						<img src="images/color-orange.svg">
-						<img class="choosing-selected" id="selected-7" src="images/icon-selected.svg">
+						<img src="../assets/images/color-orange.svg">
+						<img class="choosing-selected" id="selected-7" src="../assets/images/icon-selected.svg">
 					</div>
 					<div class="flex-col choosing-colors" id="color-8">
-						<img src="images/color-purple.svg">
-						<img class="choosing-selected" id="selected-8" src="images/icon-selected.svg">
+						<img src="../assets/images/color-purple.svg">
+						<img class="choosing-selected" id="selected-8" src="../assets/images/icon-selected.svg">
 					</div>
 				</div>
 				<div class="flex-row" id="choosing-color-text">
@@ -130,9 +157,9 @@
 					<h1 id="choosing-car-text-h1">CHANGE?</h1>
 				</div>
 				<div class="flex-row" id="choosing-car-model">
-					<div class="flex-row"><!--<img id="choosing-car-model-icon-1" src="/images/icon-left.svg">--></div>						
+					<div class="flex-row"><!--<img id="choosing-car-model-icon-1" src="../assets//images/icon-left.svg">--></div>						
 					<div class="flex-row" id="choosing-car-model-car"><div id="model"></div></div>
-					<div class="flex-row"><!--<img id="choosing-car-model-icon-2" src="/images/icon-right.svg">--></div>
+					<div class="flex-row"><!--<img id="choosing-car-model-icon-2" src="../assets//images/icon-right.svg">--></div>
 				</div>
 				<div class="flex-row" id="choosing-car-ready">
 					<div class="flex-item">
@@ -146,7 +173,7 @@
 				<div class="flex-item" id="visual-col-1">
 				</div> 
 				<div class="flex-item" id="visual-col-2">
-					<img src="images/visual-line.svg">
+					<img src="../assets/images/visual-line.svg">
 				</div> 
 				<div class="flex-item" id="visual-col-3">
 				</div>

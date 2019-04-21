@@ -19,12 +19,13 @@ Tiltspot.on.msg = function(msg, data) {
 			Tiltspot.send.msg('ready');
 			break;
 		case 'ReconnectData':
-			var tempState = data['state-id']; //BYTTE
+			var tempState = data['state-id'];
 			setVisibility(tempState);
 			if (tempState == 4) {
 				//set car, 'car-id' : <integer>,
 			} else if (tempState == 5 || tempState == 6) {
 				//set powerup, 'active-powerup-id' : <integer>,
+				myColorCode = { r: data['color-r'], g: data['color-g'], b: data['color-b'] };
 				setControllerColor('rgba(' + data['color-r'] + ', ' + data['color-g'] + ', ' + data['color-b'] + ', ');
 			}
 			//Set color 'color-r' : <integer>, 'color-g' : <integer>, 'color-b' : <integer></integer>
@@ -41,7 +42,7 @@ Tiltspot.on.msg = function(msg, data) {
 			document.getElementById('driving-defeated-game').style.display = flex;
 			break;
 		case 'state-id': //var update-state
-			setVisibility(data['state-id']); //BYTTE
+			setVisibility(data['state-id']);
 			break;
 		case 'state-query':
 			//response: state-response,  'data' : 'state-id' : <integer>
@@ -100,6 +101,8 @@ function updateColor(msg, data) {
 		temp = 'color-7';
 	} else if (data.r == 166 && data.g == 0 && data.b == 255) {
 		temp = 'color-8';
+	} else {
+		return;
 	}
 
 	if (msg == 'color-reserved') {
@@ -117,7 +120,7 @@ function resetV() {
 function handleOrientationEvent(orientation) {
 	if (lastSentOrientation + 100 < new Date().getTime() && !dead && (ready || readyP)) {
 		lastSentOrientation = new Date().getTime();
-		var steer = (orientation.accelerationIncludingGravity.y / 5 * 0.7).toFixed(2);
+		var steer = (orientation.accelerationIncludingGravity.y / 5).toFixed(2);
 
 		if (orientation.accelerationIncludingGravity.x < 0) {
 			steer *= -1;
@@ -160,26 +163,26 @@ window.onload = function() {
 	);
 
 	document.getElementById('driving-row-2').addEventListener(
-		'click',
+		'touchstart',
 		function() {
 			Tiltspot.send.msg('fire', {});
 		},
 		false
 	);
 
-	document.getElementById('practice-ready').addEventListener(
+	document.getElementById('practice-row-2').addEventListener(
 		'click',
 		function() {
 			if (readyP) {
 				Tiltspot.send.msg('unready', {});
 				readyP = false;
-				document.getElementById('practice-ready').style.color = 'gray';
-				document.getElementById('practice-ready').innerHTML = 'READY?';
+				document.getElementById('practice-ready').style.backgroundColor = 'var(--driving-color-active)';
+				document.getElementById('practice-ready-text').innerHTML = 'READY?';
 			} else {
 				Tiltspot.send.msg('ready', {});
 				readyP = true;
-				document.getElementById('practice-ready').style.color = 'green';
-				document.getElementById('practice-ready').innerHTML = 'READY';
+				document.getElementById('practice-ready').style.backgroundColor = 'var(--driving-color)';
+				document.getElementById('practice-ready-text').innerHTML = 'UNREADY';
 			}
 		},
 		false
@@ -188,6 +191,7 @@ window.onload = function() {
 	document.getElementById('choosing-car-ready').addEventListener(
 		'click',
 		function() {
+			if (myColor == 'color-0' || !myColorCode) return;
 			if (ready) {
 				document.getElementById('choosing-car-ready-text').innerHTML = 'READY?';
 				document.getElementById('choosing-car-ready-text').style.color = 'rgba(255, 255, 255, 0.7)';
@@ -197,7 +201,7 @@ window.onload = function() {
 
 				Tiltspot.send.msg('unready');
 			} else {
-				document.getElementById('choosing-car-ready-text').innerHTML = 'READY';
+				document.getElementById('choosing-car-ready-text').innerHTML = 'UNREADY';
 				document.getElementById('choosing-car-ready-text').style.color = 'green';
 				document.getElementById('choosing-row-2').style.filter = 'opacity(0.5)';
 				document.getElementById('choosing-row-3').style.filter = 'opacity(0.5)';
@@ -216,11 +220,6 @@ window.onload = function() {
 			var temp = document.getElementById(e.currentTarget.id);
 
 			if (document.getElementById(temp.id).style.filter == 'grayscale(0.9)' || ready) return;
-
-			if (myColor != 'color-0') {
-				document.getElementById('selected-' + myColor.split('-').pop()).style.display = 'none';
-				document.getElementById(myColor).getElementsByTagName('img')[0].className -= 'pulsate';
-			}
 
 			if (myColorCode) Tiltspot.send.msg('color-unreserved', myColorCode);
 
@@ -276,10 +275,16 @@ window.onload = function() {
 				default:
 					console.log('none');
 			}
+			if (myColor == temp.id) return;
+
+			if (myColor != 'color-0') {
+				document.getElementById('selected-' + myColor.split('-').pop()).style.display = 'none';
+				document.getElementById(myColor).getElementsByTagName('img')[0].className = '';
+			}
 
 			myColor = temp.id;
 
-			document.getElementById(myColor).getElementsByTagName('img')[0].className += 'pulsate';
+			document.getElementById(myColor).getElementsByTagName('img')[0].className = 'pulsate';
 			document.getElementById('selected-' + myColor.split('-').pop()).style.display = 'flex';
 			Tiltspot.send.msg('color-selected', myColorCode);
 		});

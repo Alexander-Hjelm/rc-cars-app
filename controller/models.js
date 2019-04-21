@@ -9,7 +9,7 @@ var loader = new THREE.STLLoader();
 var car;
 var material; //
 
-loader.load('/controller/cars/rc-car.stl', function(geometry) {
+loader.load('../assets/models/rc-car.stl', function(geometry) {
 	if (geometry.hasColors) {
 		material = new THREE.MeshPhongMaterial({ opacity: geometry.alpha, vertexColors: THREE.VertexColors });
 	} else {
