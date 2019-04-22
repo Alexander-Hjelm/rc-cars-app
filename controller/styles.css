@@ -258,6 +258,7 @@ h3 {
 #loading-text {
 	color: #b3bbbb;
 	animation: pulse 1.5s alternate infinite ease-in;
+	-webkit-animation: pulse 1.5s alternate infinite ease-in;
 	padding-top: 10px;
 }
 
@@ -274,6 +275,7 @@ h3 {
 
 .load-5 .car-holder {
 	animation: loadingE 5s linear infinite;
+	-webkit-animation: loadingE 5s linear infinite;
 }
 
 @keyframes loadingE {
@@ -336,6 +338,7 @@ h3 {
 
 .pulsate {
 	animation: pulse 1.5s alternate infinite ease-in;
+	-webkit-animation: pulse 1.5s alternate infinite ease-in;
 }
 
 @keyframes pulse {
