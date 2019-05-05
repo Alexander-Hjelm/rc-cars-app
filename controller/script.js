@@ -1,3 +1,5 @@
+var lastSentMovement = 0;
+
 var lastSentOrientation = 0;
 var myColor;
 var myColorCode;
@@ -7,8 +9,39 @@ var reservedColors = [];
 var ready = false;
 var readyP = false;
 var dead = false;
+var press = false;
 
-Tiltspot.on.ready = function() {};
+setTimeout(function() {
+	document.getElementById('loading').style.display = 'none';
+}, 1000);
+
+var nippleSize = Math.floor(window.innerWidth * 0.2);
+if (window.innerHeight > window.innerWidth) {
+	nippleSize = Math.floor(window.innerHeight * 0.2);
+}
+
+var nippleManager = nipplejs.create({
+	zone       : document.getElementById('touchPad'),
+	multitouch : false,
+	size       : nippleSize,
+	fadeTime   : 0
+});
+
+nippleManager.on('move', function(evt, nipple) {
+	if (new Date().getTime() - lastSentMovement > 50) {
+		if (nipple.angle) Tiltspot.send.msg('move', { h: nipple.angle.radian.toFixed(2) });
+		console.log(nipple.angle.radian.toFixed(2));
+		lastSentMovement = new Date().getTime();
+	}
+});
+
+nippleManager.on('end', function(evt) {
+	lastSentMovement = 0;
+});
+
+Tiltspot.on.ready = function() {
+	loadModels();
+};
 
 Tiltspot.on.msg = function(msg, data) {
 	switch (msg) {
@@ -91,9 +124,9 @@ function setVisibility(id) {
 		document.getElementById('choosing').style.display = 'none';
 	}
 	if (id == 5) {
-		document.getElementById('practice').style.display = 'flex';
+		alert('not made yet');
 	} else {
-		document.getElementById('practice').style.display = 'none';
+		alert('not made yet');
 	}
 	if (id == 6) {
 		dead = false;
@@ -105,24 +138,7 @@ function setVisibility(id) {
 
 function resetV() {
 	Tiltspot.send.msg('move', { v: 0.0 });
-}
-
-function handleOrientationEvent(orientation) {
-	if (lastSentOrientation + 100 < new Date().getTime() /*&& !dead && (ready || readyP)*/) {
-		lastSentOrientation = new Date().getTime();
-		var steer = (orientation.accelerationIncludingGravity.y / 5).toFixed(2);
-
-		if (orientation.accelerationIncludingGravity.x < 0) {
-			steer *= -1;
-		}
-
-		Tiltspot.send.msg('move', { h: steer });
-
-		if (steer > 0.3) steer = 0.3;
-		else if (steer < -0.3) steer = -0.3;
-		document.getElementById('visual-col-2').style.transform = 'rotate(' + steer * 10 + 'deg)';
-		document.getElementById('visual-col-2').style.webkitTransform = 'rotate(' + steer * 10 + 'deg)';
-	}
+	console.log('end');
 }
 
 function rgbToColor(color, callback) {
@@ -133,16 +149,16 @@ function rgbToColor(color, callback) {
 		case 'rgb(0,0,255)':
 			tempColor = 'color-2';
 			break;
-		case 'rgb(255,224,0)':
+		case 'rgb(255,235,4)':
 			tempColor = 'color-3';
 			break;
 		case 'rgb(0,255,0)':
 			tempColor = 'color-4';
 			break;
-		case 'rgb(255,0,239)':
+		case 'rgb(255,0,255)':
 			tempColor = 'color-5';
 			break;
-		case 'rgb(0,250,255)':
+		case 'rgb(0,255,255)':
 			tempColor = 'color-6';
 			break;
 		case 'rgb(255,123,0)':
@@ -172,9 +188,9 @@ function findColor(color, callback) {
 			myColorSelect = 'selected-2';
 			break;
 		case 'color-3':
-		case 'rgb(255,224,0)':
+		case 'rgb(255,235,4)':
 			myColor = 'color-3';
-			myColorCode = { r: '255', g: '224', b: '0' };
+			myColorCode = { r: '255', g: '235', b: '4' };
 			myColorSelect = 'selected-3';
 			break;
 		case 'color-4':
@@ -184,15 +200,15 @@ function findColor(color, callback) {
 			myColorSelect = 'selected-4';
 			break;
 		case 'color-5':
-		case 'rgb(255,0,239)':
+		case 'rgb(255,0,255)':
 			myColor = 'color-5';
-			myColorCode = { r: '255', g: '0', b: '239' };
+			myColorCode = { r: '255', g: '0', b: '255' };
 			myColorSelect = 'selected-5';
 			break;
 		case 'color-6':
-		case 'rgb(0,250,255)':
+		case 'rgb(0,255,255)':
 			myColor = 'color-6';
-			myColorCode = { r: '0', g: '250', b: '255' };
+			myColorCode = { r: '0', g: '255', b: '255' };
 			myColorSelect = 'selected-6';
 			break;
 		case 'color-7':
@@ -274,7 +290,6 @@ window.onload = function() {
 				return;
 			}
 
-			console.log(myColorSelect);
 			document.getElementById(myColorSelect).style.display = 'none';
 			document.getElementById(myColor).getElementsByTagName('img')[0].className = '';
 
@@ -288,8 +303,6 @@ window.onload = function() {
 		});
 	}
 
-	window.addEventListener('devicemotion', handleOrientationEvent, false);
-
 	document.getElementById('driving-col-1').addEventListener('touchend', resetV, false);
 	document.getElementById('driving-col-2').addEventListener('touchend', resetV, false);
 
@@ -297,6 +310,7 @@ window.onload = function() {
 		'touchstart',
 		function() {
 			Tiltspot.send.msg('move', { v: -1.0 });
+			console.log('reverse');
 		},
 		false
 	);
@@ -304,6 +318,7 @@ window.onload = function() {
 		'touchstart',
 		function() {
 			Tiltspot.send.msg('move', { v: 1.0 });
+			console.log('forward');
 		},
 		false
 	);
@@ -312,24 +327,7 @@ window.onload = function() {
 		'touchstart',
 		function() {
 			Tiltspot.send.msg('fire', {});
-		},
-		false
-	);
-
-	document.getElementById('practice-row-2').addEventListener(
-		'click',
-		function() {
-			if (readyP) {
-				Tiltspot.send.msg('unready', {});
-				readyP = false;
-				document.getElementById('practice-ready').style.backgroundColor = 'var(--driving-color-active)';
-				document.getElementById('practice-ready-text').innerHTML = 'READY?';
-			} else {
-				Tiltspot.send.msg('ready', {});
-				readyP = true;
-				document.getElementById('practice-ready').style.backgroundColor = 'var(--driving-color)';
-				document.getElementById('practice-ready-text').innerHTML = 'UNREADY';
-			}
+			console.log('fire');
 		},
 		false
 	);
