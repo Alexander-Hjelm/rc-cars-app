@@ -276,7 +276,7 @@ The domain for each data value is:
 
 * **h**: value must be between -1.0 and 1.0.
 * **v**: value must be between -1.0 and 1.0.
-* **handbarke**: value must be between 0.0 and 1.0.
+* **handbrake**: value must be between 0.0 and 1.0.
 
 The server will not respond
 
