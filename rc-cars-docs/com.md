@@ -258,6 +258,28 @@ The server will not respond.
 
 ## Racing mode (State 6)
 
+### Client to Server messages
+
+#### Movement
+Player movement input.
+```
+{
+  'message': 'move',
+  'data': {
+    'h' : <float>,
+    'v' : <float>,
+    'handbrake' : <float>
+  }
+}
+```
+The domain for each data value is:
+
+* **h**: value must be between -1.0 and 1.0.
+* **v**: value must be between -1.0 and 1.0.
+* **handbarke**: value must be between 0.0 and 1.0.
+
+The server will not respond
+
 ### Server to Client messages
 
 #### Defeated, Round
