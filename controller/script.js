@@ -7,8 +7,18 @@ var reservedColors = [];
 var ready = false;
 var readyP = false;
 var dead = false;
+var press = false;
 
-Tiltspot.on.ready = function() {};
+var turn = false;
+var timeout;
+
+setTimeout(function() {
+	document.getElementById('loading').style.display = 'none';
+}, 1000);
+
+Tiltspot.on.ready = function() {
+	loadModels();
+};
 
 Tiltspot.on.msg = function(msg, data) {
 	switch (msg) {
@@ -91,9 +101,7 @@ function setVisibility(id) {
 		document.getElementById('choosing').style.display = 'none';
 	}
 	if (id == 5) {
-		document.getElementById('practice').style.display = 'flex';
 	} else {
-		document.getElementById('practice').style.display = 'none';
 	}
 	if (id == 6) {
 		dead = false;
@@ -104,25 +112,17 @@ function setVisibility(id) {
 }
 
 function resetV() {
-	Tiltspot.send.msg('move', { v: 0.0 });
+	//Tiltspot.send.msg('move', { v: 0.0 });
+	Tiltspot.send.msg('move', { v: 1.0 });
+	console.log('end');
 }
 
-function handleOrientationEvent(orientation) {
-	if (lastSentOrientation + 100 < new Date().getTime() /*&& !dead && (ready || readyP)*/) {
-		lastSentOrientation = new Date().getTime();
-		var steer = (orientation.accelerationIncludingGravity.y / 5).toFixed(2);
-
-		if (orientation.accelerationIncludingGravity.x < 0) {
-			steer *= -1;
-		}
-
-		Tiltspot.send.msg('move', { h: steer });
-
-		if (steer > 0.3) steer = 0.3;
-		else if (steer < -0.3) steer = -0.3;
-		document.getElementById('visual-col-2').style.transform = 'rotate(' + steer * 10 + 'deg)';
-		document.getElementById('visual-col-2').style.webkitTransform = 'rotate(' + steer * 10 + 'deg)';
-	}
+function resetH() {
+	clearTimeout(timeout);
+	turn = false;
+	clearTimeout(timeout);
+	Tiltspot.send.msg('move', { h: 0.0 });
+	console.log('end');
 }
 
 function rgbToColor(color, callback) {
@@ -133,16 +133,16 @@ function rgbToColor(color, callback) {
 		case 'rgb(0,0,255)':
 			tempColor = 'color-2';
 			break;
-		case 'rgb(255,224,0)':
+		case 'rgb(255,235,4)':
 			tempColor = 'color-3';
 			break;
 		case 'rgb(0,255,0)':
 			tempColor = 'color-4';
 			break;
-		case 'rgb(255,0,239)':
+		case 'rgb(255,0,255)':
 			tempColor = 'color-5';
 			break;
-		case 'rgb(0,250,255)':
+		case 'rgb(0,255,255)':
 			tempColor = 'color-6';
 			break;
 		case 'rgb(255,123,0)':
@@ -172,9 +172,9 @@ function findColor(color, callback) {
 			myColorSelect = 'selected-2';
 			break;
 		case 'color-3':
-		case 'rgb(255,224,0)':
+		case 'rgb(255,235,4)':
 			myColor = 'color-3';
-			myColorCode = { r: '255', g: '224', b: '0' };
+			myColorCode = { r: '255', g: '235', b: '4' };
 			myColorSelect = 'selected-3';
 			break;
 		case 'color-4':
@@ -184,15 +184,15 @@ function findColor(color, callback) {
 			myColorSelect = 'selected-4';
 			break;
 		case 'color-5':
-		case 'rgb(255,0,239)':
+		case 'rgb(255,0,255)':
 			myColor = 'color-5';
-			myColorCode = { r: '255', g: '0', b: '239' };
+			myColorCode = { r: '255', g: '0', b: '255' };
 			myColorSelect = 'selected-5';
 			break;
 		case 'color-6':
-		case 'rgb(0,250,255)':
+		case 'rgb(0,255,255)':
 			myColor = 'color-6';
-			myColorCode = { r: '0', g: '250', b: '255' };
+			myColorCode = { r: '0', g: '255', b: '255' };
 			myColorSelect = 'selected-6';
 			break;
 		case 'color-7':
@@ -274,7 +274,6 @@ window.onload = function() {
 				return;
 			}
 
-			console.log(myColorSelect);
 			document.getElementById(myColorSelect).style.display = 'none';
 			document.getElementById(myColor).getElementsByTagName('img')[0].className = '';
 
@@ -288,15 +287,16 @@ window.onload = function() {
 		});
 	}
 
-	window.addEventListener('devicemotion', handleOrientationEvent, false);
-
 	document.getElementById('driving-col-1').addEventListener('touchend', resetV, false);
 	document.getElementById('driving-col-2').addEventListener('touchend', resetV, false);
+	document.getElementById('left').addEventListener('touchend', resetH, false);
+	document.getElementById('right').addEventListener('touchend', resetH, false);
 
 	document.getElementById('driving-col-1').addEventListener(
 		'touchstart',
 		function() {
 			Tiltspot.send.msg('move', { v: -1.0 });
+			console.log('reverse');
 		},
 		false
 	);
@@ -304,6 +304,7 @@ window.onload = function() {
 		'touchstart',
 		function() {
 			Tiltspot.send.msg('move', { v: 1.0 });
+			console.log('forward');
 		},
 		false
 	);
@@ -312,24 +313,51 @@ window.onload = function() {
 		'touchstart',
 		function() {
 			Tiltspot.send.msg('fire', {});
+			console.log('fire');
 		},
 		false
 	);
 
-	document.getElementById('practice-row-2').addEventListener(
-		'click',
+	document.getElementById('left').addEventListener(
+		'touchstart',
 		function() {
-			if (readyP) {
-				Tiltspot.send.msg('unready', {});
-				readyP = false;
-				document.getElementById('practice-ready').style.backgroundColor = 'var(--driving-color-active)';
-				document.getElementById('practice-ready-text').innerHTML = 'READY?';
-			} else {
-				Tiltspot.send.msg('ready', {});
-				readyP = true;
-				document.getElementById('practice-ready').style.backgroundColor = 'var(--driving-color)';
-				document.getElementById('practice-ready-text').innerHTML = 'UNREADY';
-			}
+			turn = true;
+			if (!turn) return;
+			Tiltspot.send.msg('move', { h: -0.2 });
+			timeout = setTimeout(function() {
+				if (!turn) return;
+				Tiltspot.send.msg('move', { h: -0.3 });
+				timeout = setTimeout(function() {
+					if (!turn) return;
+					Tiltspot.send.msg('move', { h: -0.7 });
+					timeout = setTimeout(function() {
+						if (!turn) return;
+						Tiltspot.send.msg('move', { h: -1 });
+					}, 100);
+				}, 100);
+			}, 100);
+		},
+		false
+	);
+
+	document.getElementById('right').addEventListener(
+		'touchstart',
+		function() {
+			turn = true;
+			if (!turn) return;
+			Tiltspot.send.msg('move', { h: 0.2 });
+			timeout = setTimeout(function() {
+				if (!turn) return;
+				Tiltspot.send.msg('move', { h: 0.3 });
+				timeout = setTimeout(function() {
+					if (!turn) return;
+					Tiltspot.send.msg('move', { h: 0.7 });
+					timeout = setTimeout(function() {
+						if (!turn) return;
+						Tiltspot.send.msg('move', { h: 1 });
+					}, 100);
+				}, 100);
+			}, 100);
 		},
 		false
 	);

@@ -35,13 +35,22 @@ h3 {
 }
 
 .noselect {
-	-webkit-touch-callout: none; /* iOS Safari */
-	-webkit-user-select: none; /* Safari */
-	-khtml-user-select: none; /* Konqueror HTML */
-	-moz-user-select: none; /* Firefox */
-	-ms-user-select: none; /* Internet Explorer/Edge */
-	user-select: none; /* Non-prefixed version, currently
-                                    supported by Chrome and Opera */
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+img {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	pointer-events: none;
 }
 
 /****
@@ -119,37 +128,24 @@ h3 {
 *
 *****/
 
-#practice {
-	display: none;
-	height: calc(100% - 10px);
-	width: calc(100% - 10px);
-	padding: 5px;
-	background-color: #444444;
-}
-
-#practice-row-2 {
-	margin-bottom: 5px;
-	border-radius: 5px;
-	padding: 5px;
-}
-
-#practice-ready {
-	justify-content: center;
-	align-items: center;
-	border-radius: 5px;
-	background-color: var(--driving-color-active);
-}
-
-#practice-ready-text {
-	color: white;
-}
-
 #driving {
-	display: none;
+	display: flex;
 	height: calc(100% - 10px);
 	width: calc(100% - 10px);
 	padding: 5px;
 	background-color: #444444;
+}
+
+#left:hover {
+	background-color: #ff2828;
+}
+
+#right:hover {
+	background-color: #ff2828;
+}
+
+#driving h2 {
+	font-size: 18pt;
 }
 
 #driving-defeated-round {
@@ -170,31 +166,38 @@ h3 {
 	z-index: 1;
 }
 
-#driving-row-2 {
-	flex: 0 0 calc(30% - 5px);
+.driving-col-turn {
 	background-color: var(--driving-color);
+	border-radius: 10px;
+	margin: 5px;
+}
+
+#driving-row-2 {
+	background-color: var(--driving-color);
+	border-radius: 10px;
 	margin-bottom: 5px;
-	border-radius: 5px;
+	margin-right: 5px;
+	margin-left: 5px;
 }
 
 #driving-row-2:active {
 	background-color: var(--driving-color-active);
 }
 
-#driving-row-3 {
-	flex: 0 0 calc(60% - 5px);
-}
-
 #driving-col-1 {
 	background-color: var(--driving-color);
 	border-radius: 10px;
-	margin-right: 2.5px;
+	margin-bottom: 5px;
+	margin-right: 5px;
+	margin-left: 5px;
 }
 
 #driving-col-2 {
 	background-color: var(--driving-color);
 	border-radius: 10px;
-	margin-left: 2.5px;
+	margin-bottom: 5px;
+	margin-right: 5px;
+	margin-left: 5px;
 }
 
 #driving-col-1:active,
@@ -234,6 +237,22 @@ h3 {
 
 .driving-drive-text h2 {
 	margin: 0;
+}
+
+/**********/
+
+#touch-container {
+	margin-left: 5px;
+	margin-left: 5px;
+	background-color: #80808030;
+	background-image: url(https://www.transparenttextures.com/patterns/3px-tile.png);
+}
+
+#touchPad {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	overflow: hidden;
 }
 
 /****
@@ -296,7 +315,6 @@ h3 {
 *****/
 
 #choosing {
-	display: none;
 	height: calc(100% - 10px);
 	width: calc(100% - 10px);
 	padding: 5px;

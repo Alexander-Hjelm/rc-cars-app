@@ -1,27 +1,24 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height">
+		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height">
 		<link rel="stylesheet" href="styles.css">
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src='https://tiltspot.tv/api/controller/controller-1.0.0.js' rel='script' type='application/javascript'></script>
-		<script src='/three.js' defer></script>
-		<script src='/STLLoader.js' defer></script>
-		<script src ='/models.js' defer></script>
-		<script src ='/script.js' defer></script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/103/three.min.js' ></script>
 	</head>
 	<body class="noselect">
-			<div class="flex-container" id="waiting">
-					<div class="load-5">
-						<div class="ring-2">
-							<div class="car-holder">
-								<img src="../assets/images/car-loading.png">
-							</div>
-						</div>
+		<div class="flex-container" id="waiting">
+			<div class="load-5">
+				<div class="ring-2">
+					<div class="car-holder">
+						<img src="../assets/images/car-loading.png">
 					</div>
-					<h3 id="loading-text">WAIT FOR HOST</h3>
 				</div>
+			</div>
+			<h3 id="loading-text">WAIT FOR HOST</h3>
+		</div>
 		<div class="flex-container" id="loading">
 			<div class="load-5">
 				<div class="ring-2">
@@ -41,67 +38,59 @@
 				<h1>Your out!!</h1>
 				<h2>Wait for the other to finish</h2>
 			</div>
-			<div class="flex-row" id="row-1">
-				<div class="flex-item" id="visual-col-1">
-					<img src="../assets/images/tilt-left.svg">
-				</div> 
-				<div class="flex-item" id="visual-col-2">
-					<img src="../assets/images/visual-line.svg">
-				</div> 
-				<div class="flex-item" id="visual-col-3">
-					<img src="../assets/images/tilt-right.svg">
-				</div> 
-
-			</div>
-			<div class="flex-row" id="driving-row-2">
-				<div class="flex-item" id="driving-perk-text">
-					<h2>POWER UP</h2>		
-				</div> 
-				<div class="flex-item" id="driving-perk-icon">
-					<img src="../assets/images/icon-perk.svg">
-				</div> 
-				<div class="flex-item" id="driving-perk-empty"></div> 
-			</div>
-			<div class="flex-row" id="driving-row-3">
-				<div class="flex-col" id="driving-col-1">
-					<div class="flex-item driving-drive-icon"><img src="../assets/images/icon-break.svg"></div>
-					<div class="flex-item driving-drive-text"><h2>BREAK</h2></div>
+			<div class="flex-col">
+				<div class="flex-row" id="row-1">
+					<div class="flex-item" id="visual-col-2">
+						<!--<img src="../assets/images/visual-line.svg">-->
+					</div>
 				</div>
-				<div class="flex-col" id="driving-col-2">
-					<div class="flex-item driving-drive-icon"><img src="../assets/images/icon-forward.svg"></div>
-					<div class="flex-item driving-drive-text"><h2>FORWARD</h2></div>
+				<div class="flex-row">
+					<!--<div class="flex-col">
+						<div class="flex-row" id="driving-row-2">
+							<div class="flex-item" id="driving-perk-text">
+								<h2>POWER UP</h2>		
+							</div> 
+							<div class="flex-item" id="driving-perk-icon">
+								<img src="../assets/images/icon-perk.svg">
+							</div> 
+							<div class="flex-item" id="driving-perk-empty"></div> 
+						</div>
+						<div class="flex-row" id="driving-row-3">
+							<div class="flex-col" id="driving-col-1">
+								<div class="flex-item driving-drive-icon"><img src="../assets/images/icon-break.svg"></div>
+								<div class="flex-item driving-drive-text"><h2>BREAK</h2></div>
+							</div>
+							<div class="flex-col" id="driving-col-2">
+								<div class="flex-item driving-drive-icon"><img src="../assets/images/icon-forward.svg"></div>
+								<div class="flex-item driving-drive-text"><h2>FORWARD</h2></div>
+							</div>
+						</div>
+					</div>-->
+					<div class="flex-col driving-col-turn" id="left">
+						<div class="flex-item driving-drive-text"><h2>LEFT</h2></div>
+					</div>
+					<div class="flex-col">
+						<div class="flex-col" id="driving-row-2">
+							<!--<div class="flex-item driving-drive-icon">
+								<img src="../assets/images/icon-perk.svg">
+							</div>-->
+							<div class="flex-item driving-drive-text"><h2>POWER UP</h2></div>
+						</div>
+						<div class="flex-col" id="driving-col-1">
+							<!--<div class="flex-item driving-drive-icon"><img src="../assets/images/icon-break.svg"></div>-->
+							<div class="flex-item driving-drive-text"><h2>REVERSE</h2></div>
+						</div>
+						<div class="flex-col" id="driving-col-2">
+							<!--<div class="flex-item driving-drive-icon"><img src="../assets/images/icon-forward.svg"></div>-->
+							<div class="flex-item driving-drive-text"><h2>START CAR</h2></div>
+						</div>
+					</div>
+					<div class="flex-col driving-col-turn" id="right">
+						<div class="flex-item driving-drive-text"><h2>RIGHT</h2></div>
+					</div>
 				</div>
 			</div>
 		</div>
-		<div class="flex-container" id="practice">
-				<div class="flex-row" id="row-1">
-					<div class="flex-item" id="visual-col-1">
-						<img src="../assets/images/tilt-left.svg">
-					</div> 
-					<div class="flex-item" id="visual-col-2">
-						<img src="../assets/images/visual-line.svg">
-					</div> 
-					<div class="flex-item" id="visual-col-3">
-						<img src="../assets/images/tilt-right.svg">
-					</div> 
-	
-				</div>
-				<div class="flex-row" id="practice-row-2">
-					<div class="flex-item" id="practice-ready">
-						<h2 id="practice-ready-text">READY?</h2>		
-					</div> 
-				</div>
-				<div class="flex-row" id="driving-row-3">
-					<div class="flex-col" id="driving-col-1">
-						<div class="flex-item driving-drive-icon"><img src="../assets/images/icon-break.svg"></div>
-						<div class="flex-item driving-drive-text"><h2>BREAK</h2></div>
-					</div>
-					<div class="flex-col" id="driving-col-2">
-						<div class="flex-item driving-drive-icon"><img src="../assets/images/icon-forward.svg"></div>
-						<div class="flex-item driving-drive-text"><h2>FORWARD</h2></div>
-					</div>
-				</div>
-			</div>
 		<div class="flex-container" id="choosing">
 			<div class="flex-row" id="row-1">
 				<div class="flex-item" id="visual-col-1">
@@ -202,5 +191,9 @@
 				</div>
 			</div>
 		</div>
+		<script src="nipplejs.min.js" type="text/javascript" rel="script" ></script>
+		<script src='STLLoader.js'></script>
+		<script src ='models.js'></script>
+		<script src ='script.js'></script>
 	</body>
 </html>
