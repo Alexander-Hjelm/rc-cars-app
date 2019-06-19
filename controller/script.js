@@ -1,5 +1,3 @@
-var lastSentMovement = 0;
-
 var lastSentOrientation = 0;
 var myColor;
 var myColorCode;
@@ -11,33 +9,12 @@ var readyP = false;
 var dead = false;
 var press = false;
 
+var turn = false;
+var timeout;
+
 setTimeout(function() {
 	document.getElementById('loading').style.display = 'none';
 }, 1000);
-
-var nippleSize = Math.floor(window.innerWidth * 0.2);
-if (window.innerHeight > window.innerWidth) {
-	nippleSize = Math.floor(window.innerHeight * 0.2);
-}
-
-var nippleManager = nipplejs.create({
-	zone       : document.getElementById('touchPad'),
-	multitouch : false,
-	size       : nippleSize,
-	fadeTime   : 0
-});
-
-nippleManager.on('move', function(evt, nipple) {
-	if (new Date().getTime() - lastSentMovement > 50) {
-		if (nipple.angle) Tiltspot.send.msg('move', { h: nipple.angle.radian.toFixed(2) });
-		console.log(nipple.angle.radian.toFixed(2));
-		lastSentMovement = new Date().getTime();
-	}
-});
-
-nippleManager.on('end', function(evt) {
-	lastSentMovement = 0;
-});
 
 Tiltspot.on.ready = function() {
 	loadModels();
@@ -124,9 +101,7 @@ function setVisibility(id) {
 		document.getElementById('choosing').style.display = 'none';
 	}
 	if (id == 5) {
-		alert('not made yet');
 	} else {
-		alert('not made yet');
 	}
 	if (id == 6) {
 		dead = false;
@@ -137,7 +112,16 @@ function setVisibility(id) {
 }
 
 function resetV() {
-	Tiltspot.send.msg('move', { v: 0.0 });
+	//Tiltspot.send.msg('move', { v: 0.0 });
+	Tiltspot.send.msg('move', { v: 1.0 });
+	console.log('end');
+}
+
+function resetH() {
+	clearTimeout(timeout);
+	turn = false;
+	clearTimeout(timeout);
+	Tiltspot.send.msg('move', { h: 0.0 });
 	console.log('end');
 }
 
@@ -305,6 +289,8 @@ window.onload = function() {
 
 	document.getElementById('driving-col-1').addEventListener('touchend', resetV, false);
 	document.getElementById('driving-col-2').addEventListener('touchend', resetV, false);
+	document.getElementById('left').addEventListener('touchend', resetH, false);
+	document.getElementById('right').addEventListener('touchend', resetH, false);
 
 	document.getElementById('driving-col-1').addEventListener(
 		'touchstart',
@@ -328,6 +314,50 @@ window.onload = function() {
 		function() {
 			Tiltspot.send.msg('fire', {});
 			console.log('fire');
+		},
+		false
+	);
+
+	document.getElementById('left').addEventListener(
+		'touchstart',
+		function() {
+			turn = true;
+			if (!turn) return;
+			Tiltspot.send.msg('move', { h: -0.2 });
+			timeout = setTimeout(function() {
+				if (!turn) return;
+				Tiltspot.send.msg('move', { h: -0.3 });
+				timeout = setTimeout(function() {
+					if (!turn) return;
+					Tiltspot.send.msg('move', { h: -0.7 });
+					timeout = setTimeout(function() {
+						if (!turn) return;
+						Tiltspot.send.msg('move', { h: -1 });
+					}, 100);
+				}, 100);
+			}, 100);
+		},
+		false
+	);
+
+	document.getElementById('right').addEventListener(
+		'touchstart',
+		function() {
+			turn = true;
+			if (!turn) return;
+			Tiltspot.send.msg('move', { h: 0.2 });
+			timeout = setTimeout(function() {
+				if (!turn) return;
+				Tiltspot.send.msg('move', { h: 0.3 });
+				timeout = setTimeout(function() {
+					if (!turn) return;
+					Tiltspot.send.msg('move', { h: 0.7 });
+					timeout = setTimeout(function() {
+						if (!turn) return;
+						Tiltspot.send.msg('move', { h: 1 });
+					}, 100);
+				}, 100);
+			}, 100);
 		},
 		false
 	);
